@@ -1,0 +1,15 @@
+{
+  "name": "site-nadine-malfilatre",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "annonces": "node scraper/fetch-annonces.mjs",
+    "blog": "node blog/build.mjs",
+    "test": "node scraper/test.mjs && node blog/test.mjs"
+  },
+  "dependencies": {
+    "cheerio": "1.0.0",
+    "gray-matter": "4.0.3",
+    "marked": "16.4.2"
+  }
+}

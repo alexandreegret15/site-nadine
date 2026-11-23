@@ -1,0 +1,46 @@
+# Configuration de l'éditeur en ligne Pages CMS (https://app.pagescms.org).
+# Nadine ou Alexandre s'y connectent avec leur compte GitHub et écrivent les articles
+# dans un formulaire, sans toucher au code. Chaque enregistrement republie le site (≈ 2 min).
+media:
+  input: site/img/blog
+  output: /img/blog
+content:
+  - name: articles
+    label: Actualités
+    type: collection
+    path: articles
+    filename: "{year}-{month}-{day}-{primary}.md"
+    view:
+      fields: [title, date, categorie, brouillon]
+      sort: [date, title]
+      default:
+        sort: date
+        order: desc
+    fields:
+      - name: title
+        label: Titre
+        type: string
+        required: true
+      - name: date
+        label: Date de publication
+        type: date
+        required: true
+      - name: categorie
+        label: Catégorie
+        type: select
+        default: Actualité
+        options:
+          values: [Actualité, Conseil, Marché local, Nouveau bien, Vendu]
+      - name: image
+        label: Photo de couverture (facultative)
+        type: image
+      - name: resume
+        label: Résumé (1 ou 2 phrases, affiché sur la liste)
+        type: text
+      - name: brouillon
+        label: Brouillon (cocher pour ne pas publier tout de suite)
+        type: boolean
+        default: false
+      - name: body
+        label: Texte de l'article
+        type: rich-text

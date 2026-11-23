@@ -1,0 +1,314 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Nadine Malfilâtre Immobilier</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Nadine Malfilâtre, conseillère immobilière à Honfleur, Beuzeville et Pont-l'Évêque. Estimation, vente et achat de biens en Normandie.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;700;800&display=swap">
+<style>
+/* Charte graphique Propriétés Privées 2026 : rouge #ed1651 + blanc/noir, secondaires #fde8e7 #f6b2b6 #ef77aa #6f0521, complémentaire #f3ca1e.
+   Typo : Area Normal (titres ExtraBold, sous-titres Gras, texte Normal), remplacement Aptos ; Figtree sert de repli libre de droits. */
+:root{
+  --bg:#FFFFFF; --surface:#FFFFFF; --ink:#141414; --muted:#5C4A50; --line:#F6B2B6;
+  --accent:#ED1651; --accent-text:#C8103F; --accent-ink:#FFFFFF; --warm:#6F0521; --band:#FDE8E7; --ph:#F6B2B6;
+  --rose:#EF77AA; --jaune:#F3CA1E;
+  --display:"Area Normal","Area","Aptos","Figtree",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --body:"Area Normal","Area","Aptos","Figtree",system-ui,-apple-system,"Segoe UI",sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#120A0D; --surface:#1C1014; --ink:#F7EDEF; --muted:#D3B9C0; --line:#4A1F2B;
+  --accent:#ED1651; --accent-text:#EF77AA; --accent-ink:#FFFFFF; --warm:#F6B2B6; --band:#1A0B10; --ph:#3A1621; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#120A0D; --surface:#1C1014; --ink:#F7EDEF; --muted:#D3B9C0; --line:#4A1F2B;
+  --accent:#ED1651; --accent-text:#EF77AA; --accent-ink:#FFFFFF; --warm:#F6B2B6; --band:#1A0B10; --ph:#3A1621; color-scheme:dark}
+*{box-sizing:border-box}
+html{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.6}
+img{max-width:100%;display:block}
+[hidden]{display:none!important}
+.wrap{max-width:1080px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+h1,h2,h3{font-family:var(--display);font-weight:800;line-height:1.1;letter-spacing:-.01em;text-wrap:balance;margin:0}
+h2{font-size:clamp(1.7rem,3.5vw,2.4rem);color:var(--accent-text)}
+h3{font-weight:700}
+p{margin:0}
+a{color:var(--accent-text)}
+.eyebrow{font-size:.85rem;color:var(--warm);font-weight:700}
+.draft{background:#6F0521;color:#FFFFFF;font-size:.85rem;text-align:center}
+.draft .wrap{padding-block:8px}
+
+header{border-bottom:1px solid var(--line)}
+header .wrap{display:flex;justify-content:space-between;align-items:center;gap:16px;padding-block:16px;flex-wrap:wrap}
+.brand{font-family:var(--display);font-weight:800;font-size:1.35rem;color:var(--accent-text);line-height:1.2}
+.brand small{display:block;font-family:var(--body);font-weight:500;font-size:.8rem;color:var(--muted)}
+nav{display:flex;gap:20px;flex-wrap:wrap}
+nav a{color:var(--ink);text-decoration:none;font-weight:700;font-size:.95rem}
+nav a:hover{color:var(--accent-text)}
+
+.hero .wrap{display:grid;grid-template-columns:1.2fr .8fr;gap:48px;align-items:center;padding-block:48px 72px}
+.hero h1{font-size:clamp(2.2rem,5.5vw,3.5rem);margin-block:12px 18px}
+.hero h1 em{font-style:normal;color:var(--accent-text)}
+.hero p.lead{color:var(--muted);font-size:1.1rem;max-width:34em}
+.actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:28px}
+.btn{display:inline-block;padding:13px 24px;border-radius:999px;font-weight:700;text-decoration:none;border:2px solid var(--accent);font-family:var(--body);font-size:1.05rem;cursor:pointer}
+.btn.primary{background:var(--accent);color:var(--accent-ink)}
+.btn.primary:hover{background:#C8103F;border-color:#C8103F}
+.btn.ghost{background:transparent;color:var(--accent-text)}
+.btn.ghost:hover{background:var(--band)}
+.btn:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,a:focus-visible{outline:3px solid var(--jaune);outline-offset:2px}
+.visuel{position:relative;max-width:100%}
+.portrait{aspect-ratio:4/5;max-width:100%;border-radius:24px;background:linear-gradient(160deg,var(--band),var(--line));display:grid;place-items:center;color:var(--muted);font-size:.9rem;text-align:center;padding:16px}
+.portrait{position:relative;overflow:hidden}
+.portrait img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1}
+/* Bulle rouge façon sticker : à droite, encoche en bas à gauche, guillemets superposés, texte court aligné à gauche */
+.bulle{position:absolute;right:-12px;bottom:28px;z-index:2;max-width:68%;background:var(--accent);color:#FFFFFF;font-weight:800;font-size:1.2rem;line-height:1.15;padding:18px 18px 16px;border-radius:14px;text-align:left}
+.bulle::before{content:"\201C";position:absolute;top:-30px;left:10px;font-size:4rem;line-height:1;font-weight:800;color:var(--accent)}
+.bulle::after{content:"";position:absolute;left:0;bottom:-14px;width:0;height:0;border-top:16px solid var(--accent);border-right:18px solid transparent}
+.band{background:var(--band)}
+section .wrap{padding-block:64px}
+.head{display:flex;flex-direction:column;gap:8px;margin-bottom:32px;max-width:40em}
+.head p{color:var(--muted)}
+
+.services{display:grid;grid-template-columns:repeat(3,1fr);gap:28px}
+.service{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:22px;padding-top:18px;display:flex;flex-direction:column;gap:8px}
+.service h3{font-size:1.35rem}
+.service p{color:var(--muted)}
+
+.biens{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,300px),1fr));gap:24px}
+.bien{background:var(--surface);border:1px solid var(--line);border-radius:16px;overflow:hidden;display:flex;flex-direction:column}
+.photo{aspect-ratio:3/2;max-width:100%;background:var(--ph);position:relative;display:grid;place-items:center;color:var(--muted);font-size:.85rem}
+.photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.tag{position:absolute;top:12px;left:12px;background:var(--accent);color:#FFFFFF;font-size:.75rem;font-weight:700;padding:4px 12px;border-radius:999px;z-index:1}
+.nb{position:absolute;bottom:10px;right:10px;background:rgba(0,0,0,.55);color:#fff;font-size:.75rem;padding:2px 8px;border-radius:4px;z-index:1}
+.bien .info{padding:18px;display:flex;flex-direction:column;gap:10px;flex:1;min-width:0}
+.bien h3{font-size:1.15rem}
+.lieu{color:var(--muted);font-size:.92rem}
+.specs{display:flex;gap:14px;font-size:.88rem;color:var(--muted);flex-wrap:wrap}
+.desc{font-size:.92rem;color:var(--muted);display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.bottom{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:auto;padding-top:12px;border-top:1px solid var(--line);flex-wrap:wrap}
+.prix{font-family:var(--display);font-weight:800;color:var(--accent-text);font-size:1.35rem;font-variant-numeric:tabular-nums}
+.prix small{display:block;font-family:var(--body);font-size:.75rem;color:var(--muted)}
+.voir{font-weight:700;font-size:.92rem;text-decoration:none}
+.voir:hover{text-decoration:underline}
+.dpe{font-size:.78rem;font-weight:600;padding:3px 8px;border-radius:4px;color:#fff;background:#888}
+.dpe.A{background:#009C6D}.dpe.B{background:#52B153}.dpe.C{background:#78BD76}.dpe.D{background:#F4E70F;color:#2a2600}.dpe.E{background:#F0B40F;color:#2a2000}.dpe.F{background:#EB8235}.dpe.G{background:#D7221F}
+.note{font-size:.82rem;color:var(--muted);margin-top:16px}
+.vide{padding:32px;border:1px dashed var(--line);border-radius:16px;color:var(--muted);text-align:center}
+
+.apropos{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start}
+.apropos p+p{margin-top:14px}
+.points{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:14px}
+.points li{display:flex;gap:12px;align-items:baseline}
+.points li::before{content:"";flex:none;width:8px;height:8px;border-radius:50%;background:var(--accent);transform:translateY(-2px)}
+
+.contact{display:grid;grid-template-columns:.8fr 1.2fr;gap:48px}
+.coord{display:flex;flex-direction:column;gap:16px}
+.coord div span{display:block;font-size:.85rem;font-weight:700;color:var(--warm)}
+.coord div strong{font-weight:700;font-size:1.05rem;user-select:all;overflow-wrap:anywhere}
+form{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+form .full{grid-column:1/-1}
+label{display:flex;flex-direction:column;gap:6px;font-size:.9rem;font-weight:700}
+input,select,textarea{font:inherit;padding:11px 12px;border:1.5px solid var(--line);border-radius:10px;background:var(--surface);color:var(--ink)}
+textarea{min-height:110px;resize:vertical}
+.msg{grid-column:1/-1;font-size:.9rem;color:var(--accent-text);font-weight:700}
+
+.actus{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.actu{background:var(--surface);border:1px solid var(--line);border-radius:16px;overflow:hidden;display:flex;flex-direction:column;text-decoration:none;color:inherit;transition:transform .15s,box-shadow .15s}
+.actu:hover{transform:translateY(-3px);box-shadow:0 10px 24px rgba(111,5,33,.12)}
+.actu .couv{aspect-ratio:16/10;background:linear-gradient(150deg,var(--band),var(--line));position:relative;overflow:hidden;display:grid;place-items:center}
+.actu .couv img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.actu .couv span{font-family:var(--display);font-weight:800;font-size:3.4rem;color:var(--accent);opacity:.35;line-height:1}
+.actu .info{padding:18px;display:flex;flex-direction:column;gap:8px;flex:1}
+.actu h3{font-size:1.15rem}
+.actu p{color:var(--muted);font-size:.92rem}
+.actu .meta{display:flex;gap:10px;align-items:center;flex-wrap:wrap;font-size:.82rem;color:var(--muted)}
+.actu .cat{background:var(--accent);color:#fff;font-weight:700;font-size:.75rem;padding:3px 11px;border-radius:999px}
+.tout{margin-top:28px}
+footer{background:#141414;color:#E9DCE0;border-top:4px solid var(--accent);font-size:.84rem}
+footer .wrap{padding-block:32px;display:flex;flex-direction:column;gap:6px}
+
+@media (max-width:780px){
+  .hero .wrap,.apropos,.contact{grid-template-columns:1fr;gap:32px}
+  .visuel{max-width:300px}
+  .bulle{right:-8px;font-size:1.05rem}
+  .services,.actus{grid-template-columns:1fr}
+  form{grid-template-columns:1fr}
+  section .wrap{padding-block:48px}
+}
+</style>
+</head>
+<body>
+
+<div class="draft"><div class="wrap">Prototype : annonces reprises chaque jour depuis Propriétés Privées.</div></div>
+
+<header><div class="wrap">
+  <div class="brand">Nadine Malfilâtre<small>Conseillère immobilière · Réseau Propriétés Privées</small></div>
+  <nav aria-label="Navigation">
+    <a href="#biens">Biens à vendre</a><a href="#services">Services</a><a href="#apropos">À propos</a><a href="blog/index.html">Actualités</a><a href="#contact">Contact</a>
+  </nav>
+</div></header>
+
+<section class="hero"><div class="wrap">
+  <div>
+    <span class="eyebrow">Honfleur · Beuzeville · Pont-l'Évêque</span>
+    <h1>Vendre ou acheter sur la Côte Normande avec <em>une interlocutrice unique</em></h1>
+    <p class="lead">25 ans d'expérience dans l'immobilier. Je vous accompagne de l'estimation jusqu'à la signature chez le notaire, avec la force d'un réseau national et la disponibilité d'une conseillère de proximité.</p>
+    <div class="actions">
+      <a class="btn primary" href="#biens">Voir les biens à vendre</a>
+      <a class="btn ghost" href="#contact">Faire estimer mon bien</a>
+    </div>
+  </div>
+  <div class="visuel"><div class="portrait"><img src="img/nadine.png" alt="Portrait de Nadine Malfilâtre" onerror="if(!this.dataset.r){this.dataset.r=1;this.src='https://images.proprietes-privees.com/negociateur/NMAL.png'}else{this.remove()}"><span>Portrait de Nadine</span></div>
+    <p class="bulle">Ma plus belle vente, c'est la vôtre</p></div>
+</div></section>
+
+<section id="biens" class="band"><div class="wrap">
+  <div class="head">
+    <span class="eyebrow">À vendre</span>
+    <h2>Mes biens du moment</h2>
+    <p id="maj">Chargement des annonces…</p>
+  </div>
+  <div class="biens" id="liste"></div>
+  <p class="note">Prix affichés honoraires inclus. Le détail de chaque annonce, les diagnostics et le barème d'honoraires sont consultables sur la fiche Propriétés Privées.</p>
+</div></section>
+
+<section id="services"><div class="wrap">
+  <div class="head"><span class="eyebrow">Services</span><h2>Ce que je fais pour vous</h2></div>
+  <div class="services">
+    <div class="service"><h3>Estimer</h3><p>Visite du bien et avis de valeur écrit, basé sur les ventes récentes du secteur. Gratuit et sans engagement.</p></div>
+    <div class="service"><h3>Vendre</h3><p>Photos soignées, diffusion sur les grands portails, sélection des acquéreurs et organisation des visites.</p></div>
+    <div class="service"><h3>Acheter</h3><p>Recherche ciblée selon vos critères, accompagnement sur l'offre, le compromis et le financement.</p></div>
+  </div>
+</div></section>
+
+<section id="apropos" class="band"><div class="wrap apropos">
+  <div>
+    <span class="eyebrow">À propos</span>
+    <h2 style="margin-block:8px 18px">25 ans au service de vos projets immobiliers</h2>
+    <p>Je connais le marché de Honfleur, Beuzeville, Pont-l'Évêque et de la Côte Normande : les quartiers, les prix et les attentes des acquéreurs.</p>
+    <p>Conseillère du réseau Propriétés Privées, je travaille sans agence physique : je me déplace chez vous et je reste joignable.</p>
+  </div>
+  <ul class="points">
+    <li>Estimation offerte</li>
+    <li>Un seul interlocuteur du premier rendez-vous à l'acte</li>
+    <li>Compte rendu après chaque visite</li>
+    <li>Diffusion de votre annonce sur les principaux portails</li>
+  </ul>
+</div></section>
+
+<section id="actualites" hidden><div class="wrap">
+  <div class="head"><span class="eyebrow">Actualités</span><h2>Conseils et nouvelles du secteur</h2></div>
+  <div class="actus" id="actus"></div>
+  <div class="tout"><a class="btn ghost" href="blog/index.html">Toutes les actualités</a></div>
+</div></section>
+
+<section id="contact" class="band"><div class="wrap contact">
+  <div class="coord">
+    <div class="head" style="margin:0"><span class="eyebrow">Contact</span><h2>Parlons de votre projet</h2></div>
+    <div><span>Téléphone</span><strong>06 81 51 62 89</strong></div>
+    <div><span>E-mail</span><strong>n.malfilatre@proprietes-privees.com</strong></div>
+    <div><span>Secteur</span><strong>Honfleur, Beuzeville, Pont-l'Évêque et la Côte Normande</strong></div>
+  </div>
+  <form id="f" novalidate>
+    <label>Nom<input id="nom" required autocomplete="name"></label>
+    <label>Téléphone<input id="tel" type="tel" autocomplete="tel"></label>
+    <label class="full">E-mail<input id="mail" type="email" required autocomplete="email"></label>
+    <label class="full">Votre projet<select id="projet"><option>Faire estimer mon bien</option><option>Vendre</option><option>Acheter</option><option>Une question sur une annonce</option></select></label>
+    <label class="full">Message<textarea id="message" placeholder="Adresse du bien, type, surface, référence de l'annonce…"></textarea></label>
+    <div class="full"><button class="btn primary" type="submit">Envoyer ma demande</button></div>
+    <p class="msg" id="msg" hidden></p>
+  </form>
+</div></section>
+
+<footer><div class="wrap">
+  <span>Nadine Malfilâtre, conseillère immobilière du réseau Propriétés Privées (SAS PROPRIETES PRIVEES, 44 allée des Cinq Continents, 44120 Vertou, RCS Nantes 487 624 777).</span>
+  <span>Carte professionnelle CPI 4401 2016 000 010 388 délivrée par la CCI Nantes Saint-Nazaire · Attestation d'habilitation n° [à compléter] · Barème des honoraires : [lien à ajouter] · Mentions légales et médiateur : [à compléter]</span>
+</div></footer>
+
+<script>
+var fmt = new Intl.NumberFormat("fr-FR");
+function el(tag, cls, txt){ var e=document.createElement(tag); if(cls) e.className=cls; if(txt!=null) e.textContent=txt; return e; }
+
+function carte(a){
+  var art = el("article","bien");
+  var ph = el("div","photo"); ph.textContent = "Photo indisponible";
+  if (a.photos && a.photos.length){
+    var img = el("img"); img.src = a.photos[0]; img.alt = a.titre + " à " + a.ville; img.loading = "lazy";
+    img.onerror = function(){ img.remove(); };
+    ph.appendChild(img);
+    if (a.photos.length > 1) ph.appendChild(el("span","nb", a.photos.length + " photos"));
+  }
+  if (a.exclusivite) ph.appendChild(el("span","tag","Exclusivité"));
+  art.appendChild(ph);
+
+  var info = el("div","info");
+  info.appendChild(el("h3", null, a.titre));
+  info.appendChild(el("span","lieu", a.ville + (a.cp ? " (" + a.cp + ")" : "")));
+  var specs = el("div","specs");
+  if (a.surface) specs.appendChild(el("span", null, fmt.format(a.surface) + " m²"));
+  if (a.pieces) specs.appendChild(el("span", null, a.pieces + (a.pieces > 1 ? " pièces" : " pièce")));
+  if (a.chambres) specs.appendChild(el("span", null, a.chambres + " ch."));
+  if (a.terrain) specs.appendChild(el("span", null, "Terrain " + fmt.format(a.terrain) + " m²"));
+  specs.appendChild(el("span", null, "Réf. " + a.ref));
+  info.appendChild(specs);
+  if (a.description) info.appendChild(el("p","desc", a.description));
+
+  var bottom = el("div","bottom");
+  var prix = el("span","prix", a.prix ? fmt.format(a.prix) + " €" : "Prix sur demande");
+  if (a.prix && a.surface) prix.appendChild(el("small", null, fmt.format(Math.round(a.prix / a.surface)) + " €/m²"));
+  bottom.appendChild(prix);
+  if (a.dpe) bottom.appendChild(el("span","dpe " + a.dpe, "DPE " + a.dpe));
+  var lien = el("a","voir","Voir l'annonce →"); lien.href = a.url; lien.target = "_blank"; lien.rel = "noopener";
+  bottom.appendChild(lien);
+  info.appendChild(bottom);
+  art.appendChild(info);
+  return art;
+}
+
+fetch("data/annonces.json", {cache:"no-store"})
+  .then(function(r){ if(!r.ok) throw new Error(r.status); return r.json(); })
+  .then(function(d){
+    var liste = document.getElementById("liste");
+    var n = d.annonces.length;
+    var date = new Date(d.miseAJour).toLocaleDateString("fr-FR",{day:"numeric",month:"long",year:"numeric"});
+    document.getElementById("maj").textContent = n + (n > 1 ? " biens en vente" : " bien en vente") + " · liste mise à jour le " + date + ".";
+    if (!n){ liste.appendChild(el("div","vide","Aucun bien en vente en ce moment. Contactez-moi pour être prévenu des nouveautés.")); return; }
+    d.annonces.forEach(function(a){ liste.appendChild(carte(a)); });
+  })
+  .catch(function(){
+    document.getElementById("maj").textContent = "Les annonces n'ont pas pu être chargées. Réessayez dans un instant ou appelez-moi au 06 81 51 62 89.";
+  });
+
+// Trois derniers articles du blog (fichier généré par blog/build.mjs). Section masquée s'il n'y en a pas.
+fetch("blog/articles.json", {cache:"no-store"})
+  .then(function(r){ if(!r.ok) throw new Error(r.status); return r.json(); })
+  .then(function(d){
+    var l = (d.articles || []).slice(0,3); if (!l.length) return;
+    var box = document.getElementById("actus");
+    l.forEach(function(a){
+      var c = el("a","actu"); c.href = a.url;
+      var cv = el("div","couv"); cv.appendChild(el("span",null,"\u201C"));
+      if (a.image){ var i = el("img"); i.src = a.image; i.alt = ""; i.loading = "lazy"; i.onerror = function(){ i.remove(); }; cv.appendChild(i); }
+      c.appendChild(cv);
+      var inf = el("div","info"), m = el("div","meta");
+      m.appendChild(el("span","cat",a.categorie));
+      m.appendChild(el("span",null,new Date(a.date+"T12:00:00").toLocaleDateString("fr-FR",{day:"numeric",month:"long",year:"numeric"})));
+      inf.appendChild(m); inf.appendChild(el("h3",null,a.titre)); inf.appendChild(el("p",null,a.resume));
+      c.appendChild(inf); box.appendChild(c);
+    });
+    document.getElementById("actualites").hidden = false;
+  })
+  .catch(function(){});
+
+document.getElementById("f").addEventListener("submit",function(e){
+  e.preventDefault();
+  var m=document.getElementById("msg"),n=document.getElementById("nom").value.trim(),a=document.getElementById("mail").value.trim();
+  m.hidden=false;
+  if(!n||!a||a.indexOf("@")<1){m.textContent="Indiquez votre nom et une adresse e-mail valide.";return;}
+  m.textContent="Prototype : ce formulaire sera relié à la boîte mail de Nadine lors de la mise en ligne.";
+});
+</script>
+</body>
+</html>
