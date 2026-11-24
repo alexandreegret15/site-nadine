@@ -376,7 +376,12 @@ function envoyerDemande(donnees, msg, bouton, ok){
   fetch("https://formsubmit.co/ajax/" + MAIL, {method:"POST", headers:{"Content-Type":"application/json","Accept":"application/json"}, body:JSON.stringify(donnees)})
     .then(function(r){ return r.json().then(function(j){ if(!r.ok || String(j.success) !== "true") throw new Error(j.message || r.status); }); })
     .then(function(){ msg.textContent = ok; })
-    .catch(function(){ msg.textContent = "L'envoi n'a pas fonctionné. Appelez Nadine au " + TEL + " ou écrivez à " + MAIL + "."; bouton.disabled = false; });
+    .catch(function(err){
+      // Tant que Nadine n'a pas cliqué sur le lien d'activation FormSubmit, le service refuse les envois.
+      if (/activat/i.test(err && err.message)) msg.textContent = "Le formulaire est en cours d'activation : votre demande n'a pas pu partir. Appelez Nadine au " + TEL + " ou écrivez à " + MAIL + ".";
+      else msg.textContent = "L'envoi n'a pas fonctionné. Appelez Nadine au " + TEL + " ou écrivez à " + MAIL + ".";
+      if (window.console) console.warn("Formulaire :", err && err.message);
+      bouton.disabled = false; });
 }
 document.getElementById("f").addEventListener("submit",function(e){
   e.preventDefault();
