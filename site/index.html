@@ -377,10 +377,15 @@ function envoyerDemande(donnees, msg, bouton, ok){
     .then(function(r){ return r.json().then(function(j){ if(!r.ok || String(j.success) !== "true") throw new Error(j.message || r.status); }); })
     .then(function(){ msg.textContent = ok; })
     .catch(function(err){
-      // Tant que Nadine n'a pas cliqué sur le lien d'activation FormSubmit, le service refuse les envois.
-      if (/activat/i.test(err && err.message)) msg.textContent = "Le formulaire est en cours d'activation : votre demande n'a pas pu partir. Appelez Nadine au " + TEL + " ou écrivez à " + MAIL + ".";
-      else msg.textContent = "L'envoi n'a pas fonctionné. Appelez Nadine au " + TEL + " ou écrivez à " + MAIL + ".";
+      // Si le service d'envoi refuse (activation en attente, panne…), on propose d'envoyer la même demande
+      // depuis la messagerie du visiteur : rien n'est perdu.
       if (window.console) console.warn("Formulaire :", err && err.message);
+      var corps = Object.keys(donnees).filter(function(k){ return k.charAt(0) !== "_" && donnees[k]; })
+        .map(function(k){ return k + " : " + donnees[k]; }).join("\n");
+      var lien = "mailto:" + MAIL + "?subject=" + encodeURIComponent(donnees._subject.replace(/^Site : /, "")) + "&body=" + encodeURIComponent("Bonjour Nadine,\n\n" + corps + "\n\nMerci de me recontacter.");
+      msg.textContent = "L'envoi automatique n'a pas abouti. Cliquez ici pour envoyer la même demande depuis votre messagerie, ou appelez Nadine au " + TEL + ". ";
+      var a = document.createElement("a"); a.href = lien; a.className = "btn primary"; a.textContent = "Envoyer ma demande par e-mail"; a.style.marginTop = ".6rem";
+      msg.appendChild(document.createElement("br")); msg.appendChild(a);
       bouton.disabled = false; });
 }
 document.getElementById("f").addEventListener("submit",function(e){
