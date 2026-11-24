@@ -372,8 +372,8 @@ fetch("blog/articles.json", {cache:"no-store"})
   .catch(function(){});
 
 // Envoi des formulaires par Web3Forms (https://web3forms.com). La clé ci-dessous n'est pas secrète :
-// elle désigne la boîte qui reçoit les demandes (Gmail d'Alexandre, clé créée le 24/11/2026).
-var WEB3FORMS_KEY = "7a9da85d-8fcc-4080-9763-a057e70a2ae7";
+// elle désigne la boîte qui reçoit les demandes (n.malfilatre@proprietes-privees.com, clé créée le 24/11/2026).
+var WEB3FORMS_KEY = "a8670c8d-d84f-43ed-8e9e-0b35e9b24f22";
 function envoyerDemande(donnees, msg, bouton, ok){
   bouton.disabled = true; msg.hidden = false; msg.textContent = "Envoi en cours…";
   var envoi = {access_key: WEB3FORMS_KEY, subject: donnees._subject, from_name: "Site Nadine Malfilâtre Immobilier"};
