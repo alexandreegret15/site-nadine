@@ -376,7 +376,10 @@ var FORM_DEST = "alexandre.egret15@gmail.com";
 function envoyerDemande(donnees, msg, bouton, ok){
   bouton.disabled = true; msg.hidden = false; msg.textContent = "Envoi en cours…";
   donnees._template = "table"; donnees._captcha = "false"; donnees._cc = MAIL;
-  fetch("https://formsubmit.co/ajax/" + FORM_DEST, {method:"POST", headers:{"Content-Type":"application/json","Accept":"application/json"}, body:JSON.stringify(donnees)})
+  // Au-delà de 15 s sans réponse du service, on abandonne et on propose l'envoi par e-mail.
+  var ctl = window.AbortController ? new AbortController() : null;
+  if (ctl) setTimeout(function(){ ctl.abort(); }, 15000);
+  fetch("https://formsubmit.co/ajax/" + FORM_DEST, {method:"POST", signal: ctl ? ctl.signal : undefined, headers:{"Content-Type":"application/json","Accept":"application/json"}, body:JSON.stringify(donnees)})
     .then(function(r){ return r.json().then(function(j){ if(!r.ok || String(j.success) !== "true") throw new Error(j.message || r.status); }); })
     .then(function(){ msg.textContent = ok; })
     .catch(function(err){
