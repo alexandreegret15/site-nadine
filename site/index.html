@@ -278,7 +278,7 @@ footer .wrap{padding-block:32px;display:flex;flex-direction:column;gap:6px}
   <form id="f" novalidate>
     <label>Prénom<input id="prenom" autocomplete="given-name"></label>
     <label>Nom<input id="nom" required autocomplete="family-name"></label>
-    <input id="pot" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px">
+    <input id="pot" name="botcheck" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px">
     <label>Téléphone<input id="tel" type="tel" autocomplete="tel"></label>
     <label>E-mail<input id="mail" type="email" required autocomplete="email"></label>
     <label class="full">Votre projet<select id="projet"><option>Faire estimer mon bien</option><option>Vendre</option><option>Acheter</option><option>Une question sur une annonce</option></select></label>
@@ -368,18 +368,18 @@ fetch("blog/articles.json", {cache:"no-store"})
   })
   .catch(function(){});
 
-// Envoi des formulaires vers la boîte mail de Nadine (service FormSubmit, sans compte).
-// La toute première demande déclenche un e-mail d'activation à Nadine : elle doit cliquer sur « Activate ».
-// Destinataire principal du service d'envoi : adresse Gmail donnée par Alexandre le 24/11/2026 (la messagerie PP bloquait l'activation).
-// Nadine reçoit chaque demande en copie (_cc).
-var FORM_DEST = "alexandre.egret15@gmail.com";
+// Envoi des formulaires par Web3Forms (https://web3forms.com). La clé ci-dessous n'est pas secrète :
+// elle désigne la boîte qui reçoit les demandes (Gmail d'Alexandre, clé créée le 24/11/2026).
+var WEB3FORMS_KEY = "7a9da85d-8fcc-4080-9763-a057e70a2ae7";
 function envoyerDemande(donnees, msg, bouton, ok){
   bouton.disabled = true; msg.hidden = false; msg.textContent = "Envoi en cours…";
-  donnees._template = "table"; donnees._captcha = "false"; donnees._cc = MAIL;
+  var envoi = {access_key: WEB3FORMS_KEY, subject: donnees._subject, from_name: "Site Nadine Malfilâtre Immobilier"};
+  if (donnees._replyto) envoi.replyto = donnees._replyto;
+  Object.keys(donnees).forEach(function(k){ if (k.charAt(0) !== "_") envoi[k] = donnees[k]; });
   // Au-delà de 15 s sans réponse du service, on abandonne et on propose l'envoi par e-mail.
   var ctl = window.AbortController ? new AbortController() : null;
   if (ctl) setTimeout(function(){ ctl.abort(); }, 15000);
-  fetch("https://formsubmit.co/ajax/" + FORM_DEST, {method:"POST", signal: ctl ? ctl.signal : undefined, headers:{"Content-Type":"application/json","Accept":"application/json"}, body:JSON.stringify(donnees)})
+  fetch("https://api.web3forms.com/submit", {method:"POST", signal: ctl ? ctl.signal : undefined, headers:{"Content-Type":"application/json","Accept":"application/json"}, body:JSON.stringify(envoi)})
     .then(function(r){ return r.json().then(function(j){ if(!r.ok || String(j.success) !== "true") throw new Error(j.message || r.status); }); })
     .then(function(){ msg.textContent = ok; })
     .catch(function(err){
