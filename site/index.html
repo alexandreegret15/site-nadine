@@ -113,6 +113,10 @@ label{display:flex;flex-direction:column;gap:6px;font-size:.9rem;font-weight:700
 input,select,textarea{font:inherit;padding:11px 12px;border:1.5px solid var(--line);border-radius:10px;background:var(--surface);color:var(--ink)}
 textarea{min-height:110px;resize:vertical}
 .msg{grid-column:1/-1;font-size:.9rem;color:var(--accent-text);font-weight:700}
+.merci{background:var(--band);border:2px solid var(--accent);border-radius:18px;padding:1.6rem 1.4rem;text-align:center;display:grid;gap:.4rem;justify-items:center}
+.merci strong{font-size:1.25rem}
+.merci p{margin:0}
+.merci-ic{width:3rem;height:3rem;border-radius:50%;background:var(--accent);color:var(--accent-ink);display:grid;place-items:center;font-size:1.6rem;font-weight:700}
 
 .actus{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
 .actu{background:var(--surface);border:1px solid var(--line);border-radius:16px;overflow:hidden;display:flex;flex-direction:column;text-decoration:none;color:inherit;transition:transform .15s,box-shadow .15s}
@@ -381,7 +385,15 @@ function envoyerDemande(donnees, msg, bouton, ok){
   if (ctl) setTimeout(function(){ ctl.abort(); }, 15000);
   fetch("https://api.web3forms.com/submit", {method:"POST", signal: ctl ? ctl.signal : undefined, headers:{"Content-Type":"application/json","Accept":"application/json"}, body:JSON.stringify(envoi)})
     .then(function(r){ return r.json().then(function(j){ if(!r.ok || String(j.success) !== "true") throw new Error(j.message || r.status); }); })
-    .then(function(){ msg.textContent = ok; })
+    .then(function(){
+      // Confirmation bien visible : le formulaire est remplacé par un encadré de remerciement.
+      var form = bouton.form, box = document.createElement("div");
+      box.className = "merci"; box.setAttribute("role", "status");
+      box.innerHTML = '<span class="merci-ic" aria-hidden="true">✓</span><strong>Demande envoyée</strong><p></p>';
+      box.querySelector("p").textContent = ok;
+      form.parentNode.replaceChild(box, form);
+      box.scrollIntoView({behavior: "smooth", block: "center"});
+    })
     .catch(function(err){
       // Si le service d'envoi refuse (activation en attente, panne…), on propose d'envoyer la même demande
       // depuis la messagerie du visiteur : rien n'est perdu.
