@@ -282,7 +282,6 @@ footer .wrap{padding-block:32px;display:flex;flex-direction:column;gap:6px}
   <form id="f" novalidate>
     <label>Prénom<input id="prenom" autocomplete="given-name"></label>
     <label>Nom<input id="nom" required autocomplete="family-name"></label>
-    <input id="pot" name="botcheck" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px">
     <label>Téléphone<input id="tel" type="tel" autocomplete="tel"></label>
     <label>E-mail<input id="mail" type="email" required autocomplete="email"></label>
     <label class="full">Votre projet<select id="projet"><option>Faire estimer mon bien</option><option>Vendre</option><option>Acheter</option><option>Une question sur une annonce</option></select></label>
@@ -412,7 +411,6 @@ document.getElementById("f").addEventListener("submit",function(e){
   var m=document.getElementById("msg"),n=v("nom"),a=v("mail");
   m.hidden=false;
   if(!n||!a||a.indexOf("@")<1){m.textContent="Indiquez votre nom et une adresse e-mail valide.";return;}
-  if(v("pot")) return;
   envoyerDemande({_subject:"Site : nouvelle demande de contact – " + v("prenom") + " " + n, _replyto:a,
     "Prénom":v("prenom"), "Nom":n, "Téléphone":v("tel"), "E-mail":a, "Projet":v("projet"), "Message":v("message")},
     m, e.target.querySelector("button"), "Merci ! Votre demande est bien envoyée, Nadine vous recontacte très vite.");
