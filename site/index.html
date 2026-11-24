@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Nadine Immobilier (test)</title>
+<title>Nadine Malfilâtre Immobilier</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <meta name="description" content="Nadine Malfilâtre, conseillère immobilière à Honfleur, Beuzeville et Pont-l'Évêque. Estimation, vente et achat de biens en Normandie.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -175,7 +175,6 @@ footer .wrap{padding-block:32px;display:flex;flex-direction:column;gap:6px}
 </head>
 <body>
 
-<div class="draft"><div class="wrap">Version test : outil d'estimation en essai. La version de référence du site n'est pas modifiée.</div></div>
 
 <header><div class="wrap">
   <div class="brand">Nadine Malfilâtre<small>Conseillère immobilière · Réseau Propriétés Privées</small></div>
@@ -507,7 +506,7 @@ document.getElementById("fe").addEventListener("submit", function(e){
     var msg = f.querySelector(".msg"); msg.hidden = false;
     if (!f.n.value.trim() || (!f.t.value.trim() && f.m.value.indexOf("@") < 1)) { msg.textContent = "Indiquez votre nom et un téléphone ou un e-mail."; return; }
     if (!f.c.checked) { msg.textContent = "Cochez la case pour accepter d'être recontacté(e)."; return; }
-    msg.textContent = "Merci ! Version test : la demande sera transmise à Nadine une fois le formulaire relié à sa boîte mail.";
+    msg.textContent = "Merci ! Pour être recontacté(e) rapidement, appelez Nadine au 06 81 51 62 89 ou écrivez à n.malfilatre@proprietes-privees.com.";
   });
   r.appendChild(f);
   res.appendChild(r);
