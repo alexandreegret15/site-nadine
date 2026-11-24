@@ -370,10 +370,13 @@ fetch("blog/articles.json", {cache:"no-store"})
 
 // Envoi des formulaires vers la boîte mail de Nadine (service FormSubmit, sans compte).
 // La toute première demande déclenche un e-mail d'activation à Nadine : elle doit cliquer sur « Activate ».
+// Destinataire principal du service d'envoi : adresse Gmail donnée par Alexandre le 24/11/2026 (la messagerie PP bloquait l'activation).
+// Nadine reçoit chaque demande en copie (_cc).
+var FORM_DEST = "alexandre.egret15@gmail.com";
 function envoyerDemande(donnees, msg, bouton, ok){
   bouton.disabled = true; msg.hidden = false; msg.textContent = "Envoi en cours…";
-  donnees._template = "table"; donnees._captcha = "false";
-  fetch("https://formsubmit.co/ajax/" + MAIL, {method:"POST", headers:{"Content-Type":"application/json","Accept":"application/json"}, body:JSON.stringify(donnees)})
+  donnees._template = "table"; donnees._captcha = "false"; donnees._cc = MAIL;
+  fetch("https://formsubmit.co/ajax/" + FORM_DEST, {method:"POST", headers:{"Content-Type":"application/json","Accept":"application/json"}, body:JSON.stringify(donnees)})
     .then(function(r){ return r.json().then(function(j){ if(!r.ok || String(j.success) !== "true") throw new Error(j.message || r.status); }); })
     .then(function(){ msg.textContent = ok; })
     .catch(function(err){
