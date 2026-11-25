@@ -165,6 +165,24 @@ async function main() {
     console.warn(`Portrait non copié : ${e.message}`);
   }
 
+  // Version WebP compressée (800 px) de la 1re photo de chaque bien et du portrait, pour un site plus rapide.
+  // Facultatif : si la conversion échoue, le site garde simplement les JPG.
+  try {
+    const { default: sharp } = await import("sharp");
+    for (const a of annonces) {
+      if (!a.photos[0] || /^https?:/.test(a.photos[0])) continue;
+      const nom = `photos/${a.ref}/vignette.webp`, fichier = new URL(`../site/${nom}`, import.meta.url);
+      try { await access(fichier); } catch {
+        await sharp(new URL(`../site/${a.photos[0]}`, import.meta.url).pathname).resize({ width: 800, withoutEnlargement: true }).webp({ quality: 66 }).toFile(fichier.pathname);
+      }
+      a.vignette = nom;
+    }
+    const portrait = new URL("../site/img/nadine.png", import.meta.url).pathname;
+    await sharp(portrait).webp({ quality: 82 }).toFile(portrait.replace(/\.png$/, ".webp"));
+  } catch (e) {
+    console.warn(`Conversion WebP ignorée : ${e.message}`);
+  }
+
   // Supprime les photos des biens retirés de la vente
   for (const d of await readdir(dossierPhotos)) {
     if (!annonces.some((a) => a.ref === d)) await rm(new URL(d, dossierPhotos), { recursive: true });

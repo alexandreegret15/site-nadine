@@ -1,4 +1,4 @@
-# Site de Nadine Malfilâtre, prototype
+# Site de Nadine Malfilatre, prototype
 
 Site vitrine statique dont la liste des biens est reprise chaque jour depuis
 sa page Propriétés Privées : https://www.proprietes-privees.com/negociateur/nadine.malfilatre
