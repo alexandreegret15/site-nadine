@@ -113,11 +113,11 @@ header .wrap{display:flex;justify-content:space-between;align-items:center;gap:1
 .brand b{display:block;font-family:var(--display);font-weight:600;font-size:1.25rem;color:var(--accent-text)}
 .brand small{display:block;font-size:.78rem;color:var(--muted);font-weight:500}
 .brand small i{font-style:normal;color:var(--pp);font-weight:700;white-space:nowrap}
-nav{display:flex;gap:4px;flex-wrap:wrap;align-items:center}
-nav a{color:var(--ink);text-decoration:none;font-weight:600;font-size:.92rem;padding:8px 10px;border-radius:8px}
+nav{display:flex;gap:2px;flex-wrap:nowrap;align-items:center}
+nav a{color:var(--ink);text-decoration:none;font-weight:600;font-size:.92rem;padding:8px 10px;border-radius:8px;white-space:nowrap}
 nav a:hover{color:var(--warm);background:var(--band)}
-nav a.cta{background:var(--accent);color:var(--accent-ink);padding:9px 16px;border-radius:999px;margin-left:6px}
-nav a.cta:hover{background:var(--navy-2);color:#fff}
+nav a.cta{background:var(--gold);color:#13243F;padding:9px 16px;border-radius:999px;margin-left:6px;white-space:nowrap}
+nav a.cta:hover{background:var(--gold-light);color:#13243F}
 .burger{display:none;background:none;border:1.5px solid var(--line);border-radius:10px;padding:9px 10px;color:var(--ink);cursor:pointer}
 .burger span{display:block;width:22px;height:2px;background:currentColor;margin:4px 0}
 
@@ -146,6 +146,24 @@ nav a.cta:hover{background:var(--navy-2);color:#fff}
 .atouts li::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--gold)}
 .credit{position:absolute;right:12px;bottom:8px;z-index:2;font-size:.7rem;color:rgba(255,255,255,.7)}
 .credit a{color:inherit}
+
+.hero-grid{display:grid;grid-template-columns:1fr auto;gap:56px;align-items:center}
+.tampon{margin:0;display:flex;flex-direction:column;align-items:center;gap:14px;text-align:center}
+.tampon picture{display:block;width:260px;height:260px;border-radius:50%;overflow:hidden;border:4px solid var(--gold);box-shadow:0 0 0 10px rgba(201,164,92,.18),0 20px 40px rgba(0,0,0,.35);background:#F7F3EB}
+.tampon img{width:100%;height:100%;object-fit:cover;object-position:center 20%}
+.tampon figcaption{font-size:.9rem;color:#E6EAF2}
+.tampon figcaption b{display:block;font-family:var(--display);font-weight:600;font-size:1.3rem;color:#fff}
+nav a.tel{border:1.5px solid var(--line);border-radius:999px;padding:8px 14px;margin-left:6px;white-space:nowrap}
+.slogan{position:relative;overflow:hidden;color:#fff;background:var(--navy)}
+.slogan>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 35%}
+.slogan::before{content:"";position:absolute;inset:0;z-index:1;background:rgba(13,24,44,.72)}
+.slogan .wrap{position:relative;z-index:2;padding-block:72px;display:flex;flex-direction:column;align-items:center;gap:22px;text-align:center}
+.slogan p{font-family:var(--display);font-size:clamp(1.6rem,3.6vw,2.4rem);line-height:1.2;max-width:22em;text-wrap:balance}
+footer .cols{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;padding-bottom:20px;border-bottom:1px solid rgba(255,255,255,.1)}
+footer .cols div{display:flex;flex-direction:column;gap:8px;min-width:0;overflow-wrap:anywhere}
+footer .cols b{color:#fff;font-size:.8rem;letter-spacing:.1em;text-transform:uppercase;margin-bottom:4px}
+footer .cols a{text-decoration:none}
+footer .cols a:hover{text-decoration:underline}
 
 /* Chiffres clés */
 .chiffres{background:var(--navy);color:#fff;border-top:1px solid rgba(255,255,255,.08)}
@@ -281,6 +299,7 @@ footer .haut{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap;
 footer .haut .brand b{color:#fff}
 footer .haut .brand small{color:#AEB8CA}
 footer .liens{display:flex;gap:6px 18px;flex-wrap:wrap}
+.brand small{white-space:nowrap}
 footer a{color:var(--gold-light)}
 footer .legal{display:flex;flex-direction:column;gap:6px;color:#AEB8CA}
 
@@ -316,12 +335,12 @@ footer .legal{display:flex;flex-direction:column;gap:6px;color:#AEB8CA}
 .aide{font-size:.82rem;color:var(--muted)}
 .aide.ok{color:var(--warm);font-weight:700}
 
-@media (max-width:980px){
+@media (max-width:1320px){
   .burger{display:block}
   header nav{display:none;position:absolute;left:0;right:0;top:100%;background:var(--bg);border-bottom:1px solid var(--line);flex-direction:column;align-items:stretch;padding:8px 16px 16px;gap:2px}
   header.ouvert nav{display:flex}
   nav a{padding:12px 10px;font-size:1rem}
-  nav a.cta{margin:8px 0 0;text-align:center}
+  nav a.cta,nav a.tel{margin:8px 0 0;text-align:center}
 }
 @media (max-width:860px){
   .apropos,.contact,.estim,.app-grid{grid-template-columns:1fr;gap:32px}
@@ -333,6 +352,10 @@ footer .legal{display:flex;flex-direction:column;gap:6px;color:#AEB8CA}
   .visuel{max-width:320px}
   .bulle{right:-8px;font-size:1.02rem}
   .hero{min-height:auto}
+  .hero-grid{grid-template-columns:1fr;gap:36px}
+  .tampon{order:-1;flex-direction:row;text-align:left;justify-content:flex-start}
+  .tampon picture{width:96px;height:96px;border-width:3px;box-shadow:0 0 0 6px rgba(201,164,92,.18)}
+  footer .cols{grid-template-columns:1fr 1fr}
   .hero .wrap{padding-block:56px 72px}
   .hero::before{background:linear-gradient(180deg,rgba(13,24,44,.86),rgba(13,24,44,.72))}
 }
@@ -348,23 +371,28 @@ footer .legal{display:flex;flex-direction:column;gap:6px;color:#AEB8CA}
   </a>
   <button class="burger" type="button" aria-label="Ouvrir le menu" aria-expanded="false" onclick="var h=this.closest('header');h.classList.toggle('ouvert');this.setAttribute('aria-expanded',h.classList.contains('ouvert'))"><span></span><span></span><span></span></button>
   <nav aria-label="Navigation principale" onclick="if(event.target.tagName==='A'){var h=this.closest('header');h.classList.remove('ouvert')}">
-    <a href="#biens">Biens à vendre</a><a href="#estimation">Estimer</a><a href="#services">Services</a><a href="#apropos">Qui suis-je ?</a><a href="#apporteur">Apporteur d'affaires</a><a href="blog/index.html">Actualités</a><a href="https://blog.immobilier-normandie-nm.fr/">Blog</a><a class="cta" href="#contact">Contact</a>
+    <a href="#biens">Biens à vendre</a><a href="#apropos">Qui suis-je ?</a><a href="#apporteur">Apporteur d'affaires</a><a href="blog/index.html">Actualités</a><a href="https://blog.immobilier-normandie-nm.fr/">Blog</a><a href="#contact">Contact</a><a class="tel" href="tel:+33681516289">06 81 51 62 89</a><a class="cta" href="#estimation">Estimer mon bien</a>
   </nav>
 </div></header>
 
 <main id="accueil">
 <section class="hero" aria-labelledby="titre">
   <img src="img/port-honfleur.svg" alt="Le Vieux Bassin de Honfleur, ses hautes maisons et ses voiliers" width="1600" height="900" fetchpriority="high" decoding="async">
-  <div class="wrap">
+  <div class="wrap hero-grid"><div>
     <span class="eyebrow">Honfleur · Beuzeville · Pont-l'Évêque</span>
     <h1 id="titre">Votre conseillère immobilière à <em>Honfleur</em> et sur la Côte Normande</h1>
     <p class="lead">Nadine Malfilatre, 25 ans d'expérience dans l'immobilier. Je vous accompagne de l'estimation jusqu'à la signature chez le notaire, avec la force du réseau national Propriétés Privées.</p>
     <div class="actions">
       <a class="btn or" href="#estimation">Estimer mon bien gratuitement</a>
-      <a class="btn clair" href="#biens">Voir les biens à vendre</a>
+      <a class="btn clair" href="tel:+33681516289">Me téléphoner</a>
+      <a class="btn clair" href="#contact">M'écrire</a>
     </div>
     <ul class="atouts"><li>25 ans d'expérience</li><li>Estimation offerte</li><li>Une interlocutrice unique</li></ul>
   </div>
+  <figure class="tampon">
+    <picture><source srcset="img/nadine.webp" type="image/webp"><img src="img/nadine.png" alt="Nadine Malfilatre, conseillère immobilière Propriétés Privées" width="250" height="300" fetchpriority="high"></picture>
+    <figcaption><b>Nadine Malfilatre</b>Conseillère Propriétés Privées</figcaption>
+  </figure></div>
   <span class="credit" id="credit-photo">Illustration : le Vieux Bassin de Honfleur</span>
 </section>
 
@@ -479,6 +507,11 @@ footer .legal{display:flex;flex-direction:column;gap:6px;color:#AEB8CA}
   </div>
 </div></section>
 
+<section class="slogan" aria-label="Votre projet immobilier sur la Côte Normande">
+  <img src="img/port-honfleur.svg" alt="" width="1600" height="900" loading="lazy" decoding="async">
+  <div class="wrap"><p>Concrétisez votre projet immobilier sereinement, à Honfleur et alentour</p><a class="btn or" href="#contact">Prendre rendez-vous</a></div>
+</section>
+
 <section id="secteur" class="band"><div class="wrap">
   <div class="head centre"><span class="eyebrow">Mon secteur</span><h2>L'immobilier entre estuaire et Pays d'Auge</h2><p>Je connais chaque commune de mon secteur, ses rues, ses atouts et ses prix.</p></div>
   <div class="secteurs">
@@ -529,7 +562,13 @@ footer .legal{display:flex;flex-direction:column;gap:6px;color:#AEB8CA}
 <footer><div class="wrap">
   <div class="haut">
     <a class="brand" href="#accueil"><svg viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="48" fill="#13243F"/><circle cx="50" cy="50" r="44.5" fill="none" stroke="#C9A45C" stroke-width="1.4"/><g fill="#E7CB8E" transform="translate(-1 0)"><rect x="22" y="31" width="2.6" height="38"/><polygon points="22,31 28.5,31 49,69 42.5,69"/><rect x="46.4" y="31" width="2.6" height="38"/><polygon points="46.4,31 52.6,31 64.2,61.5 61.2,69"/><polygon points="61.2,69 63.2,69 76.6,31 74.6,31"/><rect x="74.6" y="31" width="5.6" height="38"/><rect x="18.8" y="68" width="9" height="1.6"/><rect x="18.8" y="30.4" width="6.5" height="1.6"/><rect x="43.4" y="30.4" width="11.2" height="1.6"/><rect x="72.4" y="30.4" width="10.4" height="1.6"/><rect x="71.6" y="68" width="11.4" height="1.6"/></g></svg><span><b>Nadine Malfilatre</b><small>Conseillère immobilière · Propriétés Privées</small></span></a>
-    <nav class="liens" aria-label="Liens du pied de page"><a href="#biens">Biens à vendre</a><a href="#estimation">Estimation</a><a href="#apporteur">Apporteur d'affaires</a><a href="#faq">Questions fréquentes</a><a href="blog/index.html">Actualités</a><a href="#contact">Contact</a></nav>
+    <a class="btn or" href="tel:+33681516289">06 81 51 62 89</a>
+  </div>
+  <div class="cols">
+    <div><b>À propos</b><a href="#apropos">Qui suis-je ?</a><a href="#secteur">Mon secteur</a><a href="#faq">Questions fréquentes</a><a href="blog/index.html">Actualités</a><a href="https://blog.immobilier-normandie-nm.fr/">Blog</a></div>
+    <div><b>Vos projets</b><a href="#biens">Acheter</a><a href="#services">Vendre</a><a href="#estimation">Estimer mon bien</a><a href="#apporteur">Apporteur d'affaires</a></div>
+    <div><b>Liens pratiques</b><a href="https://www.proprietes-privees.com/bareme/NMAL.pdf" target="_blank" rel="noopener">Barème des honoraires (PDF)</a><a href="https://www.proprietes-privees.com/negociateur/nadine.malfilatre" target="_blank" rel="noopener">Ma page Propriétés Privées</a><a href="https://www.proprietes-privees.com/mentions-legales" target="_blank" rel="noopener">Mentions légales du réseau</a><a href="sitemap.xml">Plan du site</a></div>
+    <div><b>Contact</b><span>06 81 51 62 89</span><span>n.malfilatre@proprietes-privees.com</span><span>Honfleur, Beuzeville, Pont-l'Évêque</span></div>
   </div>
   <div class="legal">
     <span>Nadine Malfilatre, conseillère immobilière du réseau Propriétés Privées (SAS PROPRIETES PRIVEES, 44 allée des Cinq Continents, 44120 Vertou, RCS Nantes 487 624 777).</span>
