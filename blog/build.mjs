@@ -8,6 +8,7 @@ import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import matter from "gray-matter";
 import { marked } from "marked";
+import { PAGES } from "../pages/build.mjs";
 
 const racine = join(dirname(fileURLToPath(import.meta.url)), "..");
 const dossierArticles = join(racine, "articles");
@@ -62,14 +63,15 @@ export function lireArticle(fichier, contenu) {
 function gabarit() {
   const accueil = readFileSync(join(site, "index.html"), "utf8");
   const prendre = (re, nom) => { const m = accueil.match(re); if (!m) throw new Error(`Bloc ${nom} introuvable dans site/index.html`); return m[0]; };
-  const style = prendre(/<link rel="preconnect"[\s\S]*?<\/style>/, "style");
+  // Polices + feuille de style commune (chemin corrigé : les pages du blog sont un dossier plus bas)
+  const style = prendre(/<link rel="preconnect"[\s\S]*?<link rel="stylesheet" href="css\/site\.css">/, "style").replace('href="css/', 'href="../css/');
   let header = prendre(/<header>[\s\S]*?<\/header>/, "header");
   let footer = prendre(/<footer>[\s\S]*?<\/footer>/, "footer");
-  footer = footer.replace(/href="#/g, 'href="../index.html#').replace(/href="blog\//g, 'href="');
-  header = header
-    .replace(/href="#/g, 'href="../index.html#')
-    .replace(/href="blog\//g, 'href="')
-    .replace(/<div class="brand">/, '<a class="brand" href="../index.html">').replace(/<\/small><\/div>/, "</small></a>");
+  // Liens relatifs du site (biens.html, img/…) : un dossier plus haut ; ceux du blog restent sur place
+  const relatifs = (t) => t.replace(/(href|src)="(?![a-z]+:|#|\/)([^"]+)"/g, (m, attr, chemin) =>
+    `${attr}="${chemin.startsWith("blog/") ? chemin.slice(5) : "../" + chemin}"`);
+  footer = relatifs(footer);
+  header = relatifs(header);
   return { style, header, footer };
 }
 
@@ -168,7 +170,7 @@ function carte(a, prefixe = "") {
 }
 
 const appel = `<div class="appel"><div><h2>Un projet immobilier ?</h2><p>Estimation offerte, sans engagement. Je vous réponds rapidement.</p></div>
-<a class="btn" href="../index.html#contact">Me contacter</a></div>`;
+<a class="btn" href="../contact.html">Me contacter</a></div>`;
 
 export function construire() {
   const fichiers = existsSync(dossierArticles) ? readdirSync(dossierArticles).filter((f) => f.toLowerCase().endsWith(".md")) : [];
@@ -227,7 +229,8 @@ ${autres.length ? `<section class="autres band"><div class="wrap"><h2>À lire au
 
   // Plan du site pour les moteurs de recherche (accueil + actualités)
   const auj = new Date().toISOString().slice(0, 10);
-  const urls = [[SITE_URL, auj, "1.0"], [SITE_URL + "blog/", articles[0]?.date || auj, "0.6"],
+  const urls = [...PAGES.map((p) => [SITE_URL + (p.fichier === "index.html" ? "" : p.fichier), auj, p.fichier === "index.html" ? "1.0" : "0.8"]),
+    [SITE_URL + "blog/", articles[0]?.date || auj, "0.6"],
     ...articles.map((a) => [SITE_URL + "blog/" + a.slug + ".html", a.date, "0.5"])];
   writeFileSync(join(site, "sitemap.xml"), `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">

@@ -1,0 +1,35 @@
+<section id="apporteur" class="apporteur page-app"><div class="wrap">
+  <div class="app-grid">
+    <div>
+      <div class="head" style="margin-bottom:28px">
+        <nav class="ariane ariane-sombre" aria-label="Fil d'Ariane"><a href="index.html">Accueil</a><span aria-hidden="true">›</span><span aria-current="page">Apporteur d'affaires</span></nav>
+        
+        <h1>Devenez apporteur d'affaires</h1>
+        <p>Un proche, un voisin ou un collègue souhaite vendre sa maison ou son appartement ? Transmettez-moi son contact. Si la vente se conclut grâce à vous, vous recevez une rémunération.</p>
+      </div>
+      <ol class="etapes">
+        <li><div><b>Vous me transmettez le contact</b><span>Avec l'accord de la personne, en quelques secondes via le formulaire.</span></div></li>
+        <li><div><b>Je l'accompagne dans son projet</b><span>Estimation offerte, mise en vente, visites : je vous tiens au courant.</span></div></li>
+        <li><div><b>Vous êtes remercié à la signature</b><span>Votre rémunération est versée après la signature de l'acte chez le notaire.</span></div></li>
+      </ol>
+      <p class="app-note">Montant et conditions selon le programme apporteur d'affaires du réseau Propriétés Privées, précisés avant toute recommandation. Sans engagement de votre part.</p>
+    </div>
+    <form class="app-form" id="fa" novalidate>
+      <h3>Je recommande un vendeur</h3>
+      <fieldset><legend>Vos coordonnées</legend>
+        <label>Prénom<input name="ap" autocomplete="given-name"></label>
+        <label>Nom<input name="an" autocomplete="family-name" required></label>
+        <label>Téléphone<input name="at" type="tel" autocomplete="tel"></label>
+        <label>E-mail<input name="am" type="email" autocomplete="email"></label>
+      </fieldset>
+      <fieldset><legend>La personne qui veut vendre</legend>
+        <label>Nom<input name="cn" autocomplete="off" required></label>
+        <label>Téléphone<input name="ct" type="tel" autocomplete="off"></label>
+        <label class="full">Commune du bien<input name="cv" autocomplete="off" placeholder="ex. Honfleur"></label>
+      </fieldset>
+      <label class="full consent"><input type="checkbox" name="ok">La personne recommandée est d'accord pour que Nadine Malfilatre la contacte au sujet de son projet.</label>
+      <div class="full"><button class="btn primary" type="submit">Envoyer ma recommandation</button></div>
+      <p class="msg" hidden></p>
+    </form>
+  </div>
+</div></section>

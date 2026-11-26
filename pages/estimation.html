@@ -1,0 +1,33 @@
+<section class="page-hero">
+  <img src="img/port-honfleur.svg" alt="" width="1600" height="900" fetchpriority="high" decoding="async">
+  <div class="wrap">
+    <nav class="ariane" aria-label="Fil d'Ariane"><a href="index.html">Accueil</a><span aria-hidden="true">›</span><span aria-current="page">Estimation</span></nav>
+    <h1>Estimation immobilière gratuite en Normandie</h1>
+    <p class="lead">Une première fourchette de prix en 30 secondes, calculée sur les ventes réellement signées chez le notaire. Pour un avis de valeur précis, je viens voir votre bien, gratuitement.</p>
+  </div>
+</section>
+<section id="estimation"><div class="wrap">
+  <div class="estim">
+    <form id="fe" novalidate autocomplete="off">
+      <div class="full ville">
+        <label for="e-ville">Commune du bien</label>
+        <div class="ville-row">
+          <input id="e-ville" type="text" placeholder="Nom ou code postal, ex. Honfleur ou 14600" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="e-sugg" disabled>
+          <button class="btn ghost loc" type="button" id="e-loc" title="Utiliser ma position" disabled>Me localiser</button>
+        </div>
+        <ul id="e-sugg" class="sugg" role="listbox" hidden></ul>
+        <p class="aide" id="e-ville-info">Chargement des 2 644 communes de Normandie…</p>
+      </div>
+      <div class="full"><span style="display:block;font-size:.9rem;font-weight:700;margin-bottom:6px">Type de bien</span>
+        <div class="choix"><label><input type="radio" name="e-type" value="M" checked>Maison</label><label><input type="radio" name="e-type" value="A">Appartement</label></div></div>
+      <label>Surface habitable (m²)<input id="e-surf" type="number" inputmode="numeric" min="10" max="1000" placeholder="ex. 95"></label>
+      <label>Nombre de pièces<select id="e-pieces"><option value="">Je ne sais pas</option><option value="1">1 pièce</option><option value="2">2 pièces</option><option value="3">3 pièces</option><option value="4">4 pièces</option><option value="5">5 pièces ou plus</option></select></label>
+      <label class="full" id="e-terrain-l">Surface du terrain (m²)<input id="e-terrain" type="number" inputmode="numeric" min="0" max="200000" placeholder="ex. 800 (laissez vide si vous ne savez pas)"></label>
+      <div class="full"><button class="btn primary" type="submit">Estimer mon bien</button></div>
+      <p class="msg" id="e-err" hidden></p>
+    </form>
+    <div class="res" id="e-res" aria-live="polite">
+      <p class="vide">Indiquez la commune, le type de bien, la surface et le nombre de pièces : l'estimation indicative s'affiche ici.</p>
+    </div>
+  </div>
+</div></section>

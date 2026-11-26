@@ -1,0 +1,26 @@
+<section class="page-hero">
+  <img src="img/port-honfleur.svg" alt="" width="1600" height="900" fetchpriority="high" decoding="async">
+  <div class="wrap">
+    <nav class="ariane" aria-label="Fil d'Ariane"><a href="index.html">Accueil</a><span aria-hidden="true">›</span><span aria-current="page">Contact</span></nav>
+    <h1>Contactez Nadine Malfilatre, immobilier à Honfleur</h1>
+    <p class="lead">Un projet de vente, d'achat ou une estimation ? Écrivez-moi ou appelez-moi, je vous réponds rapidement.</p>
+  </div>
+</section>
+<section id="contact"><div class="wrap contact">
+  <div class="coord">
+    <h2>Parlons de votre projet</h2>
+    <div><span>Téléphone</span><strong><a href="tel:+33681516289">06 81 51 62 89</a></strong></div>
+    <div><span>E-mail</span><strong>n.malfilatre@proprietes-privees.com</strong></div>
+    <div><span>Secteur</span><strong>Honfleur, Beuzeville, Pont-l'Évêque et la Côte Normande</strong></div>
+  </div>
+  <form id="f" novalidate>
+    <label>Prénom<input id="prenom" autocomplete="given-name"></label>
+    <label>Nom<input id="nom" required autocomplete="family-name"></label>
+    <label>Téléphone<input id="tel" type="tel" autocomplete="tel"></label>
+    <label>E-mail<input id="mail" type="email" required autocomplete="email"></label>
+    <label class="full">Votre projet<select id="projet"><option>Faire estimer mon bien</option><option>Vendre</option><option>Acheter</option><option>Une question sur une annonce</option><option>Devenir apporteur d'affaires</option></select></label>
+    <label class="full">Message<textarea id="message" placeholder="Adresse du bien, type, surface, référence de l'annonce…"></textarea></label>
+    <div class="full"><button class="btn primary" type="submit">Envoyer ma demande</button></div>
+    <p class="msg" id="msg" hidden></p>
+  </form>
+</div></section>

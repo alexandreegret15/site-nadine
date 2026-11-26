@@ -3,8 +3,9 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "pages": "node pages/build.mjs",
     "annonces": "node scraper/fetch-annonces.mjs",
-    "blog": "node blog/build.mjs",
+    "blog": "node pages/build.mjs && node blog/build.mjs",
     "test": "node scraper/test.mjs && node blog/test.mjs"
   },
   "dependencies": {
