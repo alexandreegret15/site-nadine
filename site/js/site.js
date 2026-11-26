@@ -42,7 +42,7 @@ function carte(a){
   if (a.prix && a.surface) prix.appendChild(el("small", null, fmt.format(Math.round(a.prix / a.surface)) + " €/m²"));
   bottom.appendChild(prix);
   if (a.dpe) bottom.appendChild(el("span","dpe " + a.dpe, "DPE " + a.dpe));
-  var lien = el("a","voir","Voir l'annonce →"); lien.href = a.url; lien.target = "_blank"; lien.rel = "noopener";
+  var lien = el("a","voir","Voir l'annonce →"); lien.href = a.url; lien.target = "_blank"; lien.rel = "noopener"; lien.setAttribute("aria-label", "Voir l'annonce : " + titre + (ville ? " à " + ville : ""));
   bottom.appendChild(lien);
   info.appendChild(bottom);
   art.appendChild(info);

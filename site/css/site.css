@@ -315,3 +315,10 @@ nav a[aria-current="page"]{color:var(--warm);background:var(--band)}
   .teaser-grid{grid-template-columns:1fr;gap:24px;justify-items:start}
   .mini-portrait{width:140px;height:140px}
 }
+
+/* Toute la carte d'une annonce est cliquable : le lien « Voir l'annonce » s'étend sur la carte */
+.bien{position:relative;cursor:pointer}
+.bien .voir::after{content:"";position:absolute;inset:0;z-index:3;border-radius:18px}
+.bien:hover .voir{text-decoration:underline}
+.bien:has(.voir:focus-visible){outline:3px solid var(--gold);outline-offset:3px}
+.bien .voir:focus-visible{outline:none}
