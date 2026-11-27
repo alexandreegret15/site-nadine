@@ -1,0 +1,11 @@
+{
+ "_aide": "Une page par commune où Nadine travaille. « motNadine » : quelques phrases de Nadine sur le marché local (laisser vide tant qu'elle ne les a pas données). Ne rien écrire qui ne soit pas vérifié.",
+ "communes": [
+  { "nom": "Honfleur", "cp": "14600", "fichier": "immobilier-honfleur.html", "departement": "Calvados (14)",
+    "situation": "Honfleur est une ville portuaire du Calvados, sur l'estuaire de la Seine, face au Havre.", "motNadine": "" },
+  { "nom": "Beuzeville", "cp": "27210", "fichier": "immobilier-beuzeville.html", "departement": "Eure (27)",
+    "situation": "Beuzeville est une commune de l'Eure, voisine de Honfleur, desservie par l'autoroute A13.", "motNadine": "" },
+  { "nom": "Pont-l'Évêque", "cp": "14130", "fichier": "immobilier-pont-l-eveque.html", "departement": "Calvados (14)",
+    "situation": "Pont-l'Évêque est une commune du Calvados, au cœur du Pays d'Auge.", "motNadine": "" }
+ ]
+}

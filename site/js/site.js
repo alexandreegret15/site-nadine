@@ -3,71 +3,43 @@ var TEL = "06 81 51 62 89", MAIL = "n.malfilatre@proprietes-privees.com";
 var fmt = new Intl.NumberFormat("fr-FR");
 function el(tag, cls, txt){ var e=document.createElement(tag); if(cls) e.className=cls; if(txt!=null) e.textContent=txt; return e; }
 
-// Ville absente de certaines annonces : on la déduit du titre (« Appartement Le Havre 4 pièce(s) »).
-function villeDe(a){
-  if (a.ville) return a.ville;
-  var m = String(a.titre || "").match(/^\S+\s+(.+?)\s+\d+\s+pi[eè]ce/i);
-  return m ? m[1] : "";
-}
-function carte(a){
-  var ville = villeDe(a), titre = String(a.titre || "Bien").replace(/pièce\(s\)/i, a.pieces > 1 ? "pièces" : "pièce");
-  var art = el("article","bien");
-  var ph = el("div","photo"); ph.textContent = "Photo indisponible";
-  if (a.photos && a.photos.length){
-    var pic = document.createElement("picture");
-    if (a.vignette){ var so = document.createElement("source"); so.srcset = a.vignette; so.type = "image/webp"; pic.appendChild(so); }
-    var img = el("img"); img.src = a.photos[0]; img.alt = titre + (ville ? " à " + ville : ""); img.loading = "lazy"; img.decoding = "async"; img.width = 800; img.height = 533;
-    img.onerror = function(){ pic.remove(); };
-    pic.appendChild(img); ph.appendChild(pic);
-    if (a.photos.length > 1) ph.appendChild(el("span","nb", a.photos.length + " photos"));
-  }
-  if (a.exclusivite) ph.appendChild(el("span","tag","Exclusivité"));
-  art.appendChild(ph);
-
-  var info = el("div","info");
-  info.appendChild(el("h3", null, titre));
-  if (ville) info.appendChild(el("span","lieu", ville + (a.cp ? " (" + a.cp + ")" : "")));
-  var specs = el("div","specs");
-  if (a.surface) specs.appendChild(el("span", null, fmt.format(a.surface) + " m²"));
-  if (a.pieces) specs.appendChild(el("span", null, a.pieces + (a.pieces > 1 ? " pièces" : " pièce")));
-  if (a.chambres) specs.appendChild(el("span", null, a.chambres + " ch."));
-  if (a.terrain) specs.appendChild(el("span", null, "Terrain " + fmt.format(a.terrain) + " m²"));
-  specs.appendChild(el("span", null, "Réf. " + a.ref));
-  info.appendChild(specs);
-  var desc = String(a.description || "").replace(/^\s*Description\s*/i, "");
-  if (desc) info.appendChild(el("p","desc", desc));
-
-  var bottom = el("div","bottom");
-  var prix = el("span","prix", a.prix ? fmt.format(a.prix) + " €" : "Prix sur demande");
-  if (a.prix && a.surface) prix.appendChild(el("small", null, fmt.format(Math.round(a.prix / a.surface)) + " €/m²"));
-  bottom.appendChild(prix);
-  if (a.dpe) bottom.appendChild(el("span","dpe " + a.dpe, "DPE " + a.dpe));
-  var lien = el("a","voir","Voir l'annonce →"); lien.href = a.url; lien.target = "_blank"; lien.rel = "noopener"; lien.setAttribute("aria-label", "Voir l'annonce : " + titre + (ville ? " à " + ville : ""));
-  bottom.appendChild(lien);
-  info.appendChild(bottom);
-  art.appendChild(info);
-  return art;
-}
-
-// ---- Annonces ----
+// Les annonces sont écrites directement dans les pages par pages/build.mjs (lisibles sans JavaScript).
+// Filtres de la page « Biens à vendre » : masque les cartes qui ne correspondent pas et trie la liste.
 (function(){
-  if (!document.getElementById("liste")) return;
-fetch("data/annonces.json", {cache:"no-store"})
-  .then(function(r){ if(!r.ok) throw new Error(r.status); return r.json(); })
-  .then(function(d){
-    var liste = document.getElementById("liste");
-    var n = d.annonces.length;
-    var date = new Date(d.miseAJour).toLocaleDateString("fr-FR",{day:"numeric",month:"long",year:"numeric"});
-    var nb = document.getElementById("nb-biens"); if (nb) nb.textContent = n;
-    document.getElementById("maj").textContent = n + (n > 1 ? " biens en vente" : " bien en vente") + " · liste mise à jour le " + date + ".";
-    if (!n){ liste.appendChild(el("div","vide","Aucun bien en vente en ce moment. Contactez-moi pour être prévenu des nouveautés.")); return; }
-    var lim = +liste.getAttribute("data-limite") || n;
-    d.annonces.slice(0, lim).forEach(function(a){ liste.appendChild(carte(a)); });
-  })
-  .catch(function(){
-    document.getElementById("maj").textContent = "Les annonces n'ont pas pu être chargées. Réessayez dans un instant ou appelez-moi au 06 81 51 62 89.";
-  });
+  var f = document.getElementById("filtres"), liste = document.getElementById("liste");
+  if (!f || !liste) return;
+  var cartes = Array.prototype.slice.call(liste.querySelectorAll(".bien"));
+  cartes.forEach(function(c, i){ c.dataset.ordre = i; });
+  var $ = function(id){ return document.getElementById(id); };
+  var num = function(id){ var v = parseFloat($(id).value); return isNaN(v) ? null : v; };
+  function appliquer(){
+    var type = (f.querySelector('input[name="f-type"]:checked') || {}).value || "";
+    var ville = $("f-ville").value, pieces = +$("f-pieces").value || 0;
+    var pmin = num("f-pmin"), pmax = num("f-pmax"), smin = num("f-smin"), tri = $("f-tri").value, n = 0;
+    cartes.forEach(function(c){
+      var d = c.dataset, prix = +d.prix, ok = (!type || d.type === type) && (!ville || d.ville === ville) && (+d.pieces >= pieces)
+        && (pmin == null || prix >= pmin) && (pmax == null || (prix && prix <= pmax)) && (smin == null || +d.surface >= smin);
+      c.hidden = !ok; if (ok) n++;
+    });
+    var cle = { "prix-asc": function(a,b){ return a.dataset.prix - b.dataset.prix; }, "prix-desc": function(a,b){ return b.dataset.prix - a.dataset.prix; },
+      "surface-desc": function(a,b){ return b.dataset.surface - a.dataset.surface; } }[tri] || function(a,b){ return a.dataset.ordre - b.dataset.ordre; };
+    cartes.slice().sort(cle).forEach(function(c){ liste.appendChild(c); });
+    $("f-compte").textContent = n + (n > 1 ? " biens" : " bien") + (n < cartes.length ? " sur " + cartes.length : "");
+    $("f-vide").hidden = n > 0;
+  }
+  f.addEventListener("input", appliquer);
+  f.addEventListener("change", appliquer);
+  f.addEventListener("submit", function(e){ e.preventDefault(); });
+  f.addEventListener("reset", function(){ setTimeout(appliquer, 0); });
+})();
 
+// Page Contact ouverte depuis un bien (contact.html?ref=…) : on pré-remplit la demande.
+(function(){
+  var ref = (location.search.match(/[?&]ref=([\w-]{3,20})/) || [])[1];
+  var projet = document.getElementById("projet"), message = document.getElementById("message");
+  if (!ref || !projet || !message) return;
+  projet.value = "Une question sur une annonce";
+  if (!message.value) message.value = "Bonjour, je suis intéressé(e) par le bien réf. " + ref + ". ";
 })();
 
 (function(){
@@ -289,7 +261,7 @@ document.getElementById("fe").addEventListener("submit", function(e){
   bm.href = "mailto:" + MAIL + "?subject=" + encodeURIComponent("Demande d'estimation – " + c.n) + "&body=" + encodeURIComponent(corps); act.appendChild(bm);
   r.appendChild(act);
   var f = el("form"); f.noValidate = true;
-  f.innerHTML = '<label>Prénom<input name="p" autocomplete="given-name"></label><label>Nom<input name="n" autocomplete="family-name" required></label><label>Téléphone<input name="t" type="tel" autocomplete="tel"></label><label>E-mail<input name="m" type="email" autocomplete="email"></label><label class="full consent"><input type="checkbox" name="c">J\'accepte que Nadine Malfilatre me recontacte au sujet de mon projet. Mes coordonnées ne sont utilisées pour rien d\'autre.</label><div class="full"><button class="btn primary" type="submit">Être rappelé(e)</button></div><p class="msg full" hidden></p>';
+  f.innerHTML = '<label>Prénom<input name="p" autocomplete="given-name"></label><label>Nom<input name="n" autocomplete="family-name" required></label><label>Téléphone<input name="t" type="tel" autocomplete="tel"></label><label>E-mail<input name="m" type="email" autocomplete="email"></label><label class="full consent"><input type="checkbox" name="c">J\'accepte que Nadine Malfilatre me recontacte au sujet de mon projet. Mes coordonnées ne sont utilisées pour rien d\'autre (<a href="confidentialite.html">confidentialité</a>).</label><div class="full"><button class="btn primary" type="submit">Être rappelé(e)</button></div><p class="msg full" hidden></p>';
   f.addEventListener("submit", function(ev){
     ev.preventDefault();
     var msg = f.querySelector(".msg"); msg.hidden = false;

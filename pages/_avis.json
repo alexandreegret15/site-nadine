@@ -1,0 +1,14 @@
+{
+ "_aide": "Avis repris à la main de la fiche Google de Nadine (Google Maps). Mettre à jour la note, le nombre d'avis et la date de relevé quand de nouveaux avis arrivent. Ne jamais inventer ni modifier un avis.",
+ "source": "Google",
+ "lien": "https://maps.google.com/?cid=9704318705357651324",
+ "note": "4,5",
+ "nombre": 15,
+ "releve": "2026-11-27",
+ "avis": [
+  { "auteur": "Jean Pierre", "date": "octobre 2026", "note": 5, "texte": "Ayant eu recours au services de madame MALFILATRE lors d'une transaction, nous en sommes très satisfaits et nous recommandons cette professionnel." },
+  { "auteur": "Patrick B.", "date": "octobre 2025", "note": 5, "texte": "Nous avons été très très bien accompagné avec Nadine MALFILATRE du début à la fin de l’achat de notre résidence principale. Toujours disponible très serviable nous la recommandons vivement." },
+  { "auteur": "Maureen E.", "date": "mai 2025", "note": 5, "texte": "Nadine est très professionnelle. Souriante, agréable et disponible. Personne de confiance qui aime son métier. Vous pouvez la contacter les yeux fermés !" },
+  { "auteur": "Ingrid A.", "date": "avril 2025", "note": 5, "texte": "Contact très aisé et échange de bonne qualité avec Mme Malfilâtre. Elle nous a accompagné de manière bienveillante dans nos démarches et s'est mise à notre disposition pour toutes les interrogations et demandes qu'on pouvait lui adressées." }
+ ]
+}
