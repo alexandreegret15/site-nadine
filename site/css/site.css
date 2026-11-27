@@ -407,3 +407,33 @@ nav a.cta:hover{background:#C8103F;color:#fff}
 #f-vide{margin-bottom:24px}
 footer .cols a[href^="mailto"]{word-break:break-all}
 @media (max-width:600px){.filtres{padding:16px;gap:12px}.f-type span{padding:7px 13px}}
+
+/* Pages légales */
+.texte-legal .wrap{padding-block:48px 72px;max-width:820px}
+.texte-legal h2{font-size:1.5rem;margin-block:32px 12px}
+.texte-legal h2:first-child{margin-top:0}
+.texte-legal p,.texte-legal li{line-height:1.7}
+.texte-legal ul{display:grid;gap:6px;padding-left:1.2em}
+.note-rgpd{font-size:.82rem;color:var(--muted);margin:0}
+
+/* Pages par commune */
+.commune .wrap{padding-block:48px 56px}
+.commune-grille{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:40px;align-items:start}
+.commune-texte h2{font-size:1.7rem;margin-bottom:14px}
+.commune-texte h3{font-family:var(--body);font-size:1rem;font-weight:700;margin:26px 0 10px}
+.commune-texte p{max-width:44em}
+.chapeau{font-size:1.1rem}
+.table-defile{overflow-x:auto}
+.commune table,.comparer table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}
+.commune th,.commune td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line)}
+.commune th{font-size:.85rem;color:var(--muted);font-weight:700}
+.commune td:nth-child(n+2),.commune th:nth-child(n+2){text-align:right}
+.commune-cote{position:sticky;top:140px;display:grid;gap:20px}
+.comparer{display:block}
+.comparer b{display:block;margin-bottom:8px}
+.comparer th,.comparer td{padding:8px 4px;font-size:.9rem}
+.mot{margin:0;padding:20px 24px;border-left:3px solid var(--gold);background:var(--band);border-radius:0 12px 12px 0;font-size:1.05rem}
+.mot cite{display:block;margin-top:8px;font-style:normal;font-size:.88rem;color:var(--muted)}
+.liens-communes{display:flex;flex-wrap:wrap;gap:10px 18px;justify-content:center;margin:6px 0 18px}
+.liens-communes a{font-weight:700}
+@media (max-width:860px){.commune-grille{grid-template-columns:1fr}.commune-cote{position:static}}

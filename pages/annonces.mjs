@@ -72,6 +72,10 @@ export function nettoyer(a) {
   const dpeTxt = String(a.description || "").match(/DPE\s*:?\s*([A-G])(?![a-zà-ÿ])[^A-Z]{0,40}?GES\s*:?\s*([A-G])(?![a-zà-ÿ])/);
   // Sans DPE écrit dans l'annonce (ex. plateau brut), on n'affiche rien plutôt qu'une étiquette douteuse
   const dpe = dpeTxt ? dpeTxt[1] : null, ges = dpeTxt ? dpeTxt[2] : null;
+  // Terrain : la page du réseau affiche aussi des biens similaires, le chiffre repris peut être le leur.
+  // On ne le garde que s'il figure dans le texte de l'annonce (jamais pour un appartement).
+  const texteBrut = String(a.description || "").replace(/[\s\u00a0\u202f]/g, "");
+  const terrain = a.terrain && !/^(appartement|studio|plateau|loft)/i.test(String(a.titre)) && texteBrut.includes(`${a.terrain}m²`) ? a.terrain : null;
   const typeMot = String(a.titre || "").trim().split(/\s+/)[0] || "Bien";
   const type = /^(maison|appartement|terrain|immeuble|plateau|studio|loft|propri[ée]t[ée])$/i.test(typeMot) ? typeMot : "Bien";
   let ville = a.ville ? nomOfficiel(a.ville, a.cp) : "";
@@ -82,7 +86,7 @@ export function nettoyer(a) {
   const titreSeo = [typeAff, a.pieces ? `${a.pieces} pièce${a.pieces > 1 ? "s" : ""}` : "", a.surface ? `de ${fmt.format(a.surface)} m²` : "", ville ? aVille(ville) : ""].filter(Boolean).join(" ");
   const slug = [sansAccent(type === "Bien" ? "bien" : type), sansAccent(ville), String(a.ref).toLowerCase()].filter(Boolean).join("-");
   const resume = (blocs.find((b) => b.p)?.p || "").slice(0, 400);
-  return { ...a, dpe, ges, ville, titre, titreSeo, type, slug, chemin: `biens/${slug}.html`, blocs, mentions, resume };
+  return { ...a, terrain, dpe, ges, ville, titre, titreSeo, type, slug, chemin: `biens/${slug}.html`, blocs, mentions, resume };
 }
 
 export function chargerAnnonces() {

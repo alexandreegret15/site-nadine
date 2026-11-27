@@ -261,7 +261,7 @@ document.getElementById("fe").addEventListener("submit", function(e){
   bm.href = "mailto:" + MAIL + "?subject=" + encodeURIComponent("Demande d'estimation – " + c.n) + "&body=" + encodeURIComponent(corps); act.appendChild(bm);
   r.appendChild(act);
   var f = el("form"); f.noValidate = true;
-  f.innerHTML = '<label>Prénom<input name="p" autocomplete="given-name"></label><label>Nom<input name="n" autocomplete="family-name" required></label><label>Téléphone<input name="t" type="tel" autocomplete="tel"></label><label>E-mail<input name="m" type="email" autocomplete="email"></label><label class="full consent"><input type="checkbox" name="c">J\'accepte que Nadine Malfilatre me recontacte au sujet de mon projet. Mes coordonnées ne sont utilisées pour rien d\'autre.</label><div class="full"><button class="btn primary" type="submit">Être rappelé(e)</button></div><p class="msg full" hidden></p>';
+  f.innerHTML = '<label>Prénom<input name="p" autocomplete="given-name"></label><label>Nom<input name="n" autocomplete="family-name" required></label><label>Téléphone<input name="t" type="tel" autocomplete="tel"></label><label>E-mail<input name="m" type="email" autocomplete="email"></label><label class="full consent"><input type="checkbox" name="c">J\'accepte que Nadine Malfilatre me recontacte au sujet de mon projet. Mes coordonnées ne sont utilisées pour rien d\'autre (<a href="confidentialite.html">confidentialité</a>).</label><div class="full"><button class="btn primary" type="submit">Être rappelé(e)</button></div><p class="msg full" hidden></p>';
   f.addEventListener("submit", function(ev){
     ev.preventDefault();
     var msg = f.querySelector(".msg"); msg.hidden = false;

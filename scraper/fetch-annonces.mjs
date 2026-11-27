@@ -101,7 +101,8 @@ export function extraireAnnonce(html, ref) {
     surface,
     pieces,
     chambres,
-    terrain,
+    // terrain seulement s'il est écrit dans l'annonce (sinon il peut venir d'un bien similaire affiché sur la page)
+    terrain: terrain && description.replace(/[\s\u00a0\u202f]/g, "").includes(`${terrain}m²`) ? terrain : null,
     dpe: dpeTxt ? dpeTxt[1] : description ? null : dpe,
     ges: dpeTxt ? dpeTxt[2] : description ? null : ges,
     exclusivite: /exclusivit/i.test(texte.slice(0, 4000)),

@@ -10,6 +10,7 @@ import matter from "gray-matter";
 import { marked } from "marked";
 import { PAGES } from "../pages/build.mjs";
 import { chargerAnnonces } from "../pages/annonces.mjs";
+import { chargerCommunes } from "../pages/communes.mjs";
 
 const racine = join(dirname(fileURLToPath(import.meta.url)), "..");
 const dossierArticles = join(racine, "articles");
@@ -233,6 +234,7 @@ ${autres.length ? `<section class="autres band"><div class="wrap"><h2>À lire au
   const urls = [...PAGES.map((p) => [SITE_URL + (p.fichier === "index.html" ? "" : p.fichier), auj, p.fichier === "index.html" ? "1.0" : "0.8"]),
     [SITE_URL + "blog/", articles[0]?.date || auj, "0.6"],
     ...articles.map((a) => [SITE_URL + "blog/" + a.slug + ".html", a.date, "0.5"]),
+    ...chargerCommunes().map((c) => [SITE_URL + c.fichier, auj, "0.8"]),
     // Une page par bien à vendre (date = dernière mise à jour des annonces)
     ...(() => { const d = chargerAnnonces(); const j = (d.miseAJour || auj).slice(0, 10); return d.annonces.map((a) => [SITE_URL + a.chemin, j, "0.7"]); })()];
   writeFileSync(join(site, "sitemap.xml"), `<?xml version="1.0" encoding="UTF-8"?>

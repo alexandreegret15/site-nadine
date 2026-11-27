@@ -3,6 +3,7 @@
 // Le style est dans site/css/site.css et le code dans site/js/site.js.
 // À relancer après chaque modification d'une page : npm run pages
 import { readFileSync, writeFileSync, rmSync, mkdirSync } from "node:fs";
+import { chargerCommunes, corpsCommune, grapheCommune } from "./communes.mjs";
 import { chargerAnnonces, listeHTML, filtresHTML, corpsBien, grapheBien, esc as escHtml } from "./annonces.mjs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -26,6 +27,10 @@ export const PAGES = [
     description: "Recommandez un proche qui souhaite vendre son bien à Nadine Malfilatre : si la vente se conclut, vous êtes rémunéré à la signature chez le notaire." },
   { fichier: "faq.html", nom: "Questions fréquentes", titre: "Questions fréquentes immobilier | Nadine Malfilatre", faq: true,
     description: "Estimation gratuite, honoraires, secteur couvert, apporteur d'affaires : les réponses de Nadine Malfilatre, conseillère immobilière sur la Côte Normande." },
+  { fichier: "mentions-legales.html", nom: "Mentions légales", titre: "Mentions légales | Nadine Malfilatre, immobilier à Honfleur",
+    description: "Mentions légales du site de Nadine Malfilatre, conseillère immobilière Propriétés Privées : éditeur, hébergeur, carte professionnelle, garantie financière et médiateur." },
+  { fichier: "confidentialite.html", nom: "Confidentialité", titre: "Politique de confidentialité | Nadine Malfilatre",
+    description: "Comment Nadine Malfilatre utilise les informations envoyées par les formulaires du site, combien de temps elles sont gardées et comment exercer vos droits." },
   { fichier: "contact.html", nom: "Contact", titre: "Contact : Nadine Malfilatre, immobilier Côte Normande",
     description: "Contactez Nadine Malfilatre, conseillère immobilière Propriétés Privées sur la Côte Normande : 06 81 51 62 89, ou par le formulaire en ligne." },
 ];
@@ -114,6 +119,17 @@ export function construirePages() {
     }
     writeFileSync(join(site, p.fichier), documentHTML({ titre: p.titre, description: p.description, url, graphe, corps, actif: p.fichier, entete, pied }));
   }
+  // Une page par commune du secteur (prix DVF, biens, questions locales)
+  const communes = chargerCommunes();
+  for (const c of communes) {
+    const url = SITE_URL + c.fichier;
+    const prix = [c.M && `maisons ${new Intl.NumberFormat("fr-FR").format(c.M.m)} €/m²`, c.A && `appartements ${new Intl.NumberFormat("fr-FR").format(c.A.m)} €/m²`].filter(Boolean).join(", ");
+    writeFileSync(join(site, c.fichier), documentHTML({
+      titre: `Immobilier ${c.nom} : prix au m² et biens à vendre | N. Malfilatre`,
+      description: `Prix de l'immobilier à ${c.nom} (${c.cp}) en ${c.periode} : ${prix}, d'après les ventes notariées. Biens à vendre et estimation offerte avec Nadine Malfilatre.`,
+      url, graphe: [agent, fil([["Accueil", SITE_URL], ["Mon secteur", SITE_URL + "qui-suis-je.html#secteur"], [c.nom, url]]), grapheCommune(c, url)],
+      corps: corpsCommune(c, communes, annonces.annonces), entete, pied }));
+  }
   // Une page par bien : site/biens/<type>-<ville>-<ref>.html (dossier recréé à chaque fois : un bien vendu disparaît)
   rmSync(join(site, "biens"), { recursive: true, force: true });
   mkdirSync(join(site, "biens"), { recursive: true });
@@ -127,10 +143,10 @@ export function construirePages() {
     writeFileSync(join(site, a.chemin), documentHTML({ titre: `${a.titreSeo} | ${a.prix ? fmt.format(a.prix) + " €" : "À vendre"}`, description, url, graphe,
       corps: corpsBien(a), actif: "biens.html", image, base: "../", entete, pied }));
   }
-  return { pages: PAGES, annonces: annonces.annonces };
+  return { pages: PAGES, annonces: annonces.annonces, communes };
 }
 
 if (process.argv[1] && fileURLToPath(import.meta.url) === process.argv[1]) {
   const r = construirePages();
-  console.log(`Pages : ${r.pages.length} pages et ${r.annonces.length} page(s) de biens écrites dans site/`);
+  console.log(`Pages : ${r.pages.length} pages, ${r.communes.length} pages de communes et ${r.annonces.length} page(s) de biens écrites dans site/`);
 }
