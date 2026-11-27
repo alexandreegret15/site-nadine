@@ -193,8 +193,24 @@
 </section>
 <section id="biens" class="band"><div class="wrap">
   <p id="maj">6 biens en vente · liste mise à jour le 27 novembre 2026.</p>
+  <form class="filtres" id="filtres" aria-label="Filtrer les biens">
+    <fieldset class="f-type"><legend>Type de bien</legend>
+      <label><input type="radio" name="f-type" value="" checked><span>Tous</span></label>
+      <label><input type="radio" name="f-type" value="maison"><span>Maison</span></label>
+      <label><input type="radio" name="f-type" value="appartement"><span>Appartement</span></label>
+      <label><input type="radio" name="f-type" value="autre"><span>Autre</span></label>
+    </fieldset>
+    <label>Commune<select id="f-ville"><option value="">Toutes</option><option value="Beuzeville">Beuzeville (1)</option><option value="Honfleur">Honfleur (2)</option><option value="La Rivière-Saint-Sauveur">La Rivière-Saint-Sauveur (1)</option><option value="Le Havre">Le Havre (1)</option><option value="Saint-Pierre-du-Val">Saint-Pierre-du-Val (1)</option></select></label>
+    <label>Pièces<select id="f-pieces"><option value="0">Peu importe</option><option value="1">1 et +</option><option value="2">2 et +</option><option value="3">3 et +</option><option value="4">4 et +</option><option value="5">5 et +</option></select></label>
+    <label>Prix min (€)<input id="f-pmin" type="number" inputmode="numeric" min="0" step="5000" placeholder="Min"></label>
+    <label>Prix max (€)<input id="f-pmax" type="number" inputmode="numeric" min="0" step="5000" placeholder="Max"></label>
+    <label>Surface min (m²)<input id="f-smin" type="number" inputmode="numeric" min="0" step="5" placeholder="Min"></label>
+    <label>Trier par<select id="f-tri"><option value="">Les plus récents</option><option value="prix-asc">Prix croissant</option><option value="prix-desc">Prix décroissant</option><option value="surface-desc">Surface décroissante</option></select></label>
+    <div class="f-bas"><p id="f-compte" aria-live="polite">6 biens</p><button class="btn ghost" type="reset">Effacer les filtres</button></div>
+  </form>
+  <div class="vide" id="f-vide" hidden>Aucun bien ne correspond à ces critères. Élargissez la recherche ou <a href="contact.html">dites-moi ce que vous cherchez</a> : je vous préviens dès qu'un bien correspond.</div>
   <div class="biens" id="liste">
-<article class="bien">
+<article class="bien" data-type="appartement" data-ville="Le Havre" data-pieces="4" data-prix="163000" data-surface="90">
   <div class="photo"><picture><source srcset="photos/468698NMAL/vignette.webp" type="image/webp"><img src="photos/468698NMAL/1.jpg" alt="Appartement 4 pièces de 90 m² au Havre" loading="lazy" decoding="async" width="800" height="533"></picture><span class="nb">8 photos</span></div>
   <div class="info">
     <h3>Appartement 4 pièces de 90 m² au Havre</h3>
@@ -204,7 +220,7 @@
     <div class="bottom"><span class="prix">163 000 €<small>1 811 €/m²</small></span><span class="dpe D">DPE D</span><a class="voir" href="biens/appartement-le-havre-468698nmal.html">Voir le bien →</a></div>
   </div>
 </article>
-<article class="bien">
+<article class="bien" data-type="appartement" data-ville="La Rivière-Saint-Sauveur" data-pieces="3" data-prix="153000" data-surface="55">
   <div class="photo"><picture><source srcset="photos/471481NMAL/vignette.webp" type="image/webp"><img src="photos/471481NMAL/1.jpg" alt="Appartement 3 pièces de 55 m² à La Rivière-Saint-Sauveur" loading="lazy" decoding="async" width="800" height="533"></picture><span class="nb">7 photos</span></div>
   <div class="info">
     <h3>Appartement 3 pièces de 55 m² à La Rivière-Saint-Sauveur</h3>
@@ -214,7 +230,7 @@
     <div class="bottom"><span class="prix">153 000 €<small>2 782 €/m²</small></span><span class="dpe C">DPE C</span><a class="voir" href="biens/appartement-la-riviere-saint-sauveur-471481nmal.html">Voir le bien →</a></div>
   </div>
 </article>
-<article class="bien">
+<article class="bien" data-type="maison" data-ville="Saint-Pierre-du-Val" data-pieces="5" data-prix="262000" data-surface="115">
   <div class="photo"><picture><source srcset="photos/471460NMAL/vignette.webp" type="image/webp"><img src="photos/471460NMAL/1.jpg" alt="Maison 5 pièces de 115 m² à Saint-Pierre-du-Val" loading="lazy" decoding="async" width="800" height="533"></picture><span class="nb">9 photos</span></div>
   <div class="info">
     <h3>Maison 5 pièces de 115 m² à Saint-Pierre-du-Val</h3>
@@ -224,7 +240,7 @@
     <div class="bottom"><span class="prix">262 000 €<small>2 278 €/m²</small></span><span class="dpe E">DPE E</span><a class="voir" href="biens/maison-saint-pierre-du-val-471460nmal.html">Voir le bien →</a></div>
   </div>
 </article>
-<article class="bien">
+<article class="bien" data-type="maison" data-ville="Honfleur" data-pieces="4" data-prix="182500" data-surface="87">
   <div class="photo"><picture><source srcset="photos/471331NMAL/vignette.webp" type="image/webp"><img src="photos/471331NMAL/1.jpg" alt="Maison 4 pièces de 87 m² à Honfleur" loading="lazy" decoding="async" width="800" height="533"></picture><span class="nb">13 photos</span></div>
   <div class="info">
     <h3>Maison 4 pièces de 87 m² à Honfleur</h3>
@@ -234,7 +250,7 @@
     <div class="bottom"><span class="prix">182 500 €<small>2 098 €/m²</small></span><span class="dpe C">DPE C</span><a class="voir" href="biens/maison-honfleur-471331nmal.html">Voir le bien →</a></div>
   </div>
 </article>
-<article class="bien">
+<article class="bien" data-type="maison" data-ville="Honfleur" data-pieces="5" data-prix="542000" data-surface="169">
   <div class="photo"><picture><source srcset="photos/470732NMAL/vignette.webp" type="image/webp"><img src="photos/470732NMAL/1.jpg" alt="Maison 5 pièces de 169 m² à Honfleur" loading="lazy" decoding="async" width="800" height="533"></picture><span class="nb">11 photos</span></div>
   <div class="info">
     <h3>Maison 5 pièces de 169 m² à Honfleur</h3>
@@ -244,7 +260,7 @@
     <div class="bottom"><span class="prix">542 000 €<small>3 207 €/m²</small></span><span class="dpe D">DPE D</span><a class="voir" href="biens/maison-honfleur-470732nmal.html">Voir le bien →</a></div>
   </div>
 </article>
-<article class="bien">
+<article class="bien" data-type="autre" data-ville="Beuzeville" data-pieces="1" data-prix="99900" data-surface="96">
   <div class="photo"><picture><source srcset="photos/466586NMAL/vignette.webp" type="image/webp"><img src="photos/466586NMAL/1.jpg" alt="Plateau 1 pièce de 96 m² à Beuzeville" loading="lazy" decoding="async" width="800" height="533"></picture><span class="nb">12 photos</span></div>
   <div class="info">
     <h3>Plateau 1 pièce de 96 m² à Beuzeville</h3>
@@ -268,7 +284,7 @@
     <div><b>À propos</b><a href="qui-suis-je.html">Qui suis-je ?</a><a href="qui-suis-je.html#secteur">Mon secteur</a><a href="faq.html">Questions fréquentes</a><a href="blog/index.html">Actualités</a></div>
     <div><b>Vos projets</b><a href="biens.html">Acheter</a><a href="qui-suis-je.html#services">Vendre</a><a href="estimation.html">Estimer mon bien</a><a href="apporteur-affaires.html">Apporteur d'affaires</a></div>
     <div><b>Liens pratiques</b><a href="https://www.proprietes-privees.com/bareme/NMAL.pdf" target="_blank" rel="noopener">Barème des honoraires (PDF)</a><a href="https://www.proprietes-privees.com/negociateur/nadine.malfilatre" target="_blank" rel="noopener">Ma page Propriétés Privées</a><a href="https://www.proprietes-privees.com/mentions-legales" target="_blank" rel="noopener">Mentions légales du réseau</a><a href="sitemap.xml">Plan du site</a></div>
-    <div><b>Contact</b><span>06 81 51 62 89</span><span>n.malfilatre@proprietes-privees.com</span><span>Côte Normande</span></div>
+    <div><b>Contact</b><a href="tel:+33681516289">06 81 51 62 89</a><a href="mailto:n.malfilatre@proprietes-privees.com">n.malfilatre@proprietes-privees.com</a><span>Côte Normande</span></div>
   </div>
   <div class="legal">
     <span>Nadine Malfilatre, conseillère immobilière du réseau Propriétés Privées (SAS PROPRIETES PRIVEES, 44 allée des Cinq Continents, 44120 Vertou, RCS Nantes 487 624 777).</span>

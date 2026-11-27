@@ -3,7 +3,7 @@
 // Le style est dans site/css/site.css et le code dans site/js/site.js.
 // À relancer après chaque modification d'une page : npm run pages
 import { readFileSync, writeFileSync, rmSync, mkdirSync } from "node:fs";
-import { chargerAnnonces, listeHTML, corpsBien, grapheBien, esc as escHtml } from "./annonces.mjs";
+import { chargerAnnonces, listeHTML, filtresHTML, corpsBien, grapheBien, esc as escHtml } from "./annonces.mjs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -108,7 +108,7 @@ export function construirePages() {
     if (p.nom) graphe.push(fil([["Accueil", SITE_URL], [p.nom, url]]));
     // Annonces écrites dans la page (plus de chargement par JavaScript)
     let corps = lire(p.fichier).replace(/\{\{annonces(?::(\d+))?\}\}/g, (m, lim) => listeHTML(annonces, +lim || 0).cartes)
-      .replace("{{maj}}", listeHTML(annonces).maj).replace("{{nb}}", String(annonces.annonces.length)).replace("{{avis}}", avisHTML(avis));
+      .replace("{{maj}}", listeHTML(annonces).maj).replace("{{filtres}}", annonces.annonces.length > 1 ? filtresHTML(annonces) : "").replace("{{nb}}", String(annonces.annonces.length)).replace("{{avis}}", avisHTML(avis));
     if (p.fichier === "biens.html" && annonces.annonces.length) {
       graphe.push({ "@type": "ItemList", name: "Biens à vendre", itemListElement: annonces.annonces.map((a, i) => ({ "@type": "ListItem", position: i + 1, url: SITE_URL + a.chemin, name: a.titreSeo })) });
     }

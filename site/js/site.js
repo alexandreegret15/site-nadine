@@ -4,6 +4,35 @@ var fmt = new Intl.NumberFormat("fr-FR");
 function el(tag, cls, txt){ var e=document.createElement(tag); if(cls) e.className=cls; if(txt!=null) e.textContent=txt; return e; }
 
 // Les annonces sont écrites directement dans les pages par pages/build.mjs (lisibles sans JavaScript).
+// Filtres de la page « Biens à vendre » : masque les cartes qui ne correspondent pas et trie la liste.
+(function(){
+  var f = document.getElementById("filtres"), liste = document.getElementById("liste");
+  if (!f || !liste) return;
+  var cartes = Array.prototype.slice.call(liste.querySelectorAll(".bien"));
+  cartes.forEach(function(c, i){ c.dataset.ordre = i; });
+  var $ = function(id){ return document.getElementById(id); };
+  var num = function(id){ var v = parseFloat($(id).value); return isNaN(v) ? null : v; };
+  function appliquer(){
+    var type = (f.querySelector('input[name="f-type"]:checked') || {}).value || "";
+    var ville = $("f-ville").value, pieces = +$("f-pieces").value || 0;
+    var pmin = num("f-pmin"), pmax = num("f-pmax"), smin = num("f-smin"), tri = $("f-tri").value, n = 0;
+    cartes.forEach(function(c){
+      var d = c.dataset, prix = +d.prix, ok = (!type || d.type === type) && (!ville || d.ville === ville) && (+d.pieces >= pieces)
+        && (pmin == null || prix >= pmin) && (pmax == null || (prix && prix <= pmax)) && (smin == null || +d.surface >= smin);
+      c.hidden = !ok; if (ok) n++;
+    });
+    var cle = { "prix-asc": function(a,b){ return a.dataset.prix - b.dataset.prix; }, "prix-desc": function(a,b){ return b.dataset.prix - a.dataset.prix; },
+      "surface-desc": function(a,b){ return b.dataset.surface - a.dataset.surface; } }[tri] || function(a,b){ return a.dataset.ordre - b.dataset.ordre; };
+    cartes.slice().sort(cle).forEach(function(c){ liste.appendChild(c); });
+    $("f-compte").textContent = n + (n > 1 ? " biens" : " bien") + (n < cartes.length ? " sur " + cartes.length : "");
+    $("f-vide").hidden = n > 0;
+  }
+  f.addEventListener("input", appliquer);
+  f.addEventListener("change", appliquer);
+  f.addEventListener("submit", function(e){ e.preventDefault(); });
+  f.addEventListener("reset", function(){ setTimeout(appliquer, 0); });
+})();
+
 // Page Contact ouverte depuis un bien (contact.html?ref=…) : on pré-remplit la demande.
 (function(){
   var ref = (location.search.match(/[?&]ref=([\w-]{3,20})/) || [])[1];

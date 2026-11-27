@@ -102,7 +102,8 @@ export function carte(a) {
   const specs = [a.surface && `${fmt.format(a.surface)} m²`, a.pieces && `${a.pieces} pièce${a.pieces > 1 ? "s" : ""}`, a.chambres && `${a.chambres} ch.`,
     a.terrain && `Terrain ${fmt.format(a.terrain)} m²`, `Réf. ${a.ref}`].filter(Boolean).map((s) => `<span>${esc(s)}</span>`).join("");
   const prix = a.prix ? `${fmt.format(a.prix)} €${a.surface ? `<small>${fmt.format(Math.round(a.prix / a.surface))} €/m²</small>` : ""}` : "Prix sur demande";
-  return `<article class="bien">
+  const cat = /^maison|propri/i.test(a.type) ? "maison" : /^appartement|studio|loft/i.test(a.type) ? "appartement" : "autre";
+  return `<article class="bien" data-type="${cat}" data-ville="${esc(a.ville)}" data-pieces="${a.pieces || 0}" data-prix="${a.prix || 0}" data-surface="${a.surface || 0}">
   <div class="photo">${photo}${a.exclusivite ? `<span class="tag">Exclusivité</span>` : ""}</div>
   <div class="info">
     <h3>${esc(a.titreSeo || a.titre)}</h3>
@@ -120,6 +121,29 @@ export function listeHTML(d, limite) {
   const cartes = n ? d.annonces.slice(0, limite || n).map(carte).join("\n")
     : `<div class="vide">Aucun bien en vente en ce moment. Contactez-moi pour être prévenu des nouveautés.</div>`;
   return { maj, cartes, n };
+}
+
+// Barre de filtres de la page « Biens à vendre » (les cartes restent dans la page ; le tri se fait dans le navigateur)
+export function filtresHTML(d) {
+  const villes = new Map();
+  for (const a of d.annonces) if (a.ville) villes.set(a.ville, (villes.get(a.ville) || 0) + 1);
+  const optVilles = [...villes].sort((x, y) => x[0].localeCompare(y[0], "fr")).map(([v, n]) => `<option value="${esc(v)}">${esc(v)} (${n})</option>`).join("");
+  return `<form class="filtres" id="filtres" aria-label="Filtrer les biens">
+    <fieldset class="f-type"><legend>Type de bien</legend>
+      <label><input type="radio" name="f-type" value="" checked><span>Tous</span></label>
+      <label><input type="radio" name="f-type" value="maison"><span>Maison</span></label>
+      <label><input type="radio" name="f-type" value="appartement"><span>Appartement</span></label>
+      <label><input type="radio" name="f-type" value="autre"><span>Autre</span></label>
+    </fieldset>
+    <label>Commune<select id="f-ville"><option value="">Toutes</option>${optVilles}</select></label>
+    <label>Pièces<select id="f-pieces"><option value="0">Peu importe</option><option value="1">1 et +</option><option value="2">2 et +</option><option value="3">3 et +</option><option value="4">4 et +</option><option value="5">5 et +</option></select></label>
+    <label>Prix min (€)<input id="f-pmin" type="number" inputmode="numeric" min="0" step="5000" placeholder="Min"></label>
+    <label>Prix max (€)<input id="f-pmax" type="number" inputmode="numeric" min="0" step="5000" placeholder="Max"></label>
+    <label>Surface min (m²)<input id="f-smin" type="number" inputmode="numeric" min="0" step="5" placeholder="Min"></label>
+    <label>Trier par<select id="f-tri"><option value="">Les plus récents</option><option value="prix-asc">Prix croissant</option><option value="prix-desc">Prix décroissant</option><option value="surface-desc">Surface décroissante</option></select></label>
+    <div class="f-bas"><p id="f-compte" aria-live="polite">${d.annonces.length} bien${d.annonces.length > 1 ? "s" : ""}</p><button class="btn ghost" type="reset">Effacer les filtres</button></div>
+  </form>
+  <div class="vide" id="f-vide" hidden>Aucun bien ne correspond à ces critères. Élargissez la recherche ou <a href="contact.html">dites-moi ce que vous cherchez</a> : je vous préviens dès qu'un bien correspond.</div>`;
 }
 
 // Contenu de la page d'un bien

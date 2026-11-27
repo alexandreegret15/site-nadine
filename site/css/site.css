@@ -389,3 +389,21 @@ nav a.cta:hover{background:#C8103F;color:#fff}
 .galerie-toutes{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,220px),1fr));gap:8px;margin-top:12px}
 .galerie-toutes img{width:100%;aspect-ratio:3/2;object-fit:cover;border-radius:10px;display:block}
 @media (max-width:860px){.galerie{grid-template-rows:repeat(3,120px)}.galerie a:nth-child(n+6){display:block}}
+
+/* Filtres de la page « Biens à vendre » */
+.filtres{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,130px),1fr));gap:14px 16px;align-items:end;background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:20px;margin:18px 0 28px}
+.filtres label{display:flex;flex-direction:column;gap:6px;font-size:.85rem;font-weight:700;color:var(--ink);min-width:0}
+.filtres select,.filtres input[type=number]{height:44px;font:inherit;font-weight:400;font-size:.95rem;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:var(--bg);color:var(--ink);width:100%;min-width:0}
+.f-type{grid-column:1/-1;border:0;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:8px}
+.f-type legend{font-size:.85rem;font-weight:700;margin-bottom:8px;padding:0}
+.f-type label{flex-direction:row;font-weight:600}
+.f-type input{position:absolute;opacity:0;pointer-events:none}
+.f-type span{display:inline-block;padding:8px 16px;border:1px solid var(--line);border-radius:999px;cursor:pointer;font-size:.92rem;background:var(--bg)}
+.f-type input:checked+span{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.f-type input:focus-visible+span{outline:3px solid var(--gold);outline-offset:2px}
+.f-bas{grid-column:1/-1;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;border-top:1px solid var(--line);padding-top:14px}
+.f-bas p{margin:0;font-weight:700}
+.f-bas .btn{padding:8px 18px;font-size:.92rem}
+#f-vide{margin-bottom:24px}
+footer .cols a[href^="mailto"]{word-break:break-all}
+@media (max-width:600px){.filtres{padding:16px;gap:12px}.f-type span{padding:7px 13px}}
