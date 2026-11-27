@@ -9,7 +9,7 @@ brouillon: false
 
 Bonjour et bienvenue !
 
-Ce site rassemble au même endroit **tous les biens que j'ai en vente** (la liste se met à jour chaque matin) et, dans cette rubrique, mes **conseils et actualités** sur l'immobilier à Honfleur, Beuzeville, Pont-l'Évêque et alentour.
+Ce site rassemble au même endroit **tous les biens que j'ai en vente** (la liste se met à jour chaque matin) et, dans cette rubrique, mes **conseils et actualités** sur l'immobilier sur la Côte Normande.
 
 ## Ce que vous trouverez ici
 
