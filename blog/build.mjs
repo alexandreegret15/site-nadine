@@ -8,11 +8,15 @@ import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import matter from "gray-matter";
 import { marked } from "marked";
+import { PAGES } from "../pages/build.mjs";
 
 const racine = join(dirname(fileURLToPath(import.meta.url)), "..");
 const dossierArticles = join(racine, "articles");
 const site = join(racine, "site");
 const sortie = join(site, "blog");
+
+// Adresse publique du site (balises canoniques, partage et sitemap.xml)
+export const SITE_URL = "https://immobilier-normandie-nm.fr/";
 
 const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
 
@@ -59,13 +63,15 @@ export function lireArticle(fichier, contenu) {
 function gabarit() {
   const accueil = readFileSync(join(site, "index.html"), "utf8");
   const prendre = (re, nom) => { const m = accueil.match(re); if (!m) throw new Error(`Bloc ${nom} introuvable dans site/index.html`); return m[0]; };
-  const style = prendre(/<link rel="preconnect"[\s\S]*?<\/style>/, "style");
+  // Polices + feuille de style commune (chemin corrigé : les pages du blog sont un dossier plus bas)
+  const style = prendre(/<link rel="preconnect"[\s\S]*?<link rel="stylesheet" href="css\/site\.css">/, "style").replace('href="css/', 'href="../css/');
   let header = prendre(/<header>[\s\S]*?<\/header>/, "header");
-  const footer = prendre(/<footer>[\s\S]*?<\/footer>/, "footer");
-  header = header
-    .replace(/href="#/g, 'href="../index.html#')
-    .replace(/href="blog\//g, 'href="')
-    .replace(/<div class="brand">/, '<a class="brand" href="../index.html">').replace(/<\/small><\/div>/, "</small></a>");
+  let footer = prendre(/<footer>[\s\S]*?<\/footer>/, "footer");
+  // Liens relatifs du site (biens.html, img/…) : un dossier plus haut ; ceux du blog restent sur place
+  const relatifs = (t) => t.replace(/(href|src)="(?![a-z]+:|#|\/)([^"]+)"/g, (m, attr, chemin) =>
+    `${attr}="${chemin.startsWith("blog/") ? chemin.slice(5) : "../" + chemin}"`);
+  footer = relatifs(footer);
+  header = relatifs(header);
   return { style, header, footer };
 }
 
@@ -77,10 +83,10 @@ nav a[aria-current]{color:var(--accent-text)}
 .blog-hero p.lead{color:var(--muted);font-size:1.1rem;max-width:36em}
 .articles{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,300px),1fr));gap:24px}
 .carte-article{background:var(--surface);border:1px solid var(--line);border-radius:16px;overflow:hidden;display:flex;flex-direction:column;text-decoration:none;color:inherit;transition:transform .15s,box-shadow .15s}
-.carte-article:hover{transform:translateY(-3px);box-shadow:0 10px 24px rgba(111,5,33,.12)}
+.carte-article:hover{transform:translateY(-3px);box-shadow:0 10px 24px rgba(19,36,63,.12)}
 .carte-article .couv{aspect-ratio:16/10;background:linear-gradient(150deg,var(--band),var(--line));position:relative;overflow:hidden;display:grid;place-items:center}
 .carte-article .couv img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
-.carte-article .couv .motif{font-family:var(--display);font-weight:800;font-size:3.4rem;color:var(--accent);opacity:.35;line-height:1}
+.carte-article .couv .motif{font-family:var(--display);font-size:3.4rem;color:var(--gold,var(--accent));line-height:1}
 .carte-article .info{padding:18px;display:flex;flex-direction:column;gap:8px;flex:1}
 .carte-article h3{font-size:1.2rem}
 .carte-article p{color:var(--muted);font-size:.93rem}
@@ -111,13 +117,15 @@ nav a[aria-current]{color:var(--accent-text)}
 .appel{margin-top:44px;background:var(--accent);color:#fff;border-radius:20px;padding:28px;display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap}
 .appel h2{color:#fff;font-size:1.5rem}
 .appel p{opacity:.92;margin-top:6px}
-.appel .btn{background:#fff;color:#C8103F;border-color:#fff}
+.appel .btn{background:var(--gold,#fff);color:#13243F;border-color:var(--gold,#fff)}
 .appel .btn:hover{background:var(--band);border-color:var(--band)}
 .autres .wrap{padding-block:48px 64px}
 .autres h2{margin-bottom:24px}
 </style>`;
 
-function page({ titre, description, corps, actif, image }) {
+function page({ titre, description, corps, actif, image, chemin }) {
+  const url = SITE_URL + "blog/" + (chemin || "");
+  const imgAbs = image ? new URL(image, url).href : SITE_URL + "img/partage.jpg";
   const g = gabarit();
   const header = actif ? g.header.replace(/(<a href="index\.html")/, '$1 aria-current="page"') : g.header;
   return `<!doctype html>
@@ -127,9 +135,16 @@ function page({ titre, description, corps, actif, image }) {
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>${esc(titre)}</title>
 <meta name="description" content="${esc(description)}">
+<link rel="canonical" href="${esc(url)}">
+<link rel="icon" href="../img/logo-nm.svg" type="image/svg+xml">
+<meta property="og:type" content="${chemin ? "article" : "website"}">
+<meta property="og:locale" content="fr_FR">
+<meta property="og:url" content="${esc(url)}">
 <meta property="og:title" content="${esc(titre)}">
 <meta property="og:description" content="${esc(description)}">
-${image ? `<meta property="og:image" content="${esc(image)}">\n` : ""}${g.style}
+<meta property="og:image" content="${esc(imgAbs)}">
+<meta name="twitter:card" content="summary_large_image">
+${g.style}
 ${cssBlog}
 </head>
 <body>
@@ -155,7 +170,7 @@ function carte(a, prefixe = "") {
 }
 
 const appel = `<div class="appel"><div><h2>Un projet immobilier ?</h2><p>Estimation offerte, sans engagement. Je vous réponds rapidement.</p></div>
-<a class="btn" href="../index.html#contact">Me contacter</a></div>`;
+<a class="btn" href="../contact.html">Me contacter</a></div>`;
 
 export function construire() {
   const fichiers = existsSync(dossierArticles) ? readdirSync(dossierArticles).filter((f) => f.toLowerCase().endsWith(".md")) : [];
@@ -175,8 +190,9 @@ export function construire() {
     ? `<div class="articles">${articles.map((a) => carte(a, "")).join("\n")}</div>`
     : `<div class="vide">Aucun article pour le moment. Revenez bientôt !</div>`;
   writeFileSync(join(sortie, "index.html"), page({
-    titre: "Actualités et conseils · Nadine Malfilâtre Immobilier",
-    description: "Conseils, actualités du marché et nouveautés de Nadine Malfilâtre, conseillère immobilière à Honfleur, Beuzeville et Pont-l'Évêque.",
+    titre: "Actualités et conseils immobiliers · Nadine Malfilatre",
+    chemin: "",
+    description: "Conseils, actualités du marché et nouveautés de Nadine Malfilatre, conseillère immobilière à Honfleur, Beuzeville et Pont-l'Évêque.",
     actif: true,
     corps: `<section class="blog-hero band"><div class="wrap">
   <span class="eyebrow">Actualités</span>
@@ -190,7 +206,8 @@ export function construire() {
     const autres = articles.filter((x) => x !== a).slice(0, 3);
     const couv = a.image ? `<div class="couverture"><img src="${esc(cheminImage(a.image))}" alt="" onerror="this.parentNode.remove()"></div>` : "";
     writeFileSync(join(sortie, a.slug + ".html"), page({
-      titre: `${a.titre} · Nadine Malfilâtre Immobilier`,
+      titre: `${a.titre} · Nadine Malfilatre`,
+      chemin: a.slug + ".html",
       description: a.resume,
       image: a.image ? cheminImage(a.image) : "",
       actif: true,
@@ -209,6 +226,17 @@ ${a.html}
 ${autres.length ? `<section class="autres band"><div class="wrap"><h2>À lire aussi</h2><div class="articles">${autres.map((x) => carte(x, "")).join("\n")}</div></div></section>` : ""}`,
     }));
   }
+
+  // Plan du site pour les moteurs de recherche (accueil + actualités)
+  const auj = new Date().toISOString().slice(0, 10);
+  const urls = [...PAGES.map((p) => [SITE_URL + (p.fichier === "index.html" ? "" : p.fichier), auj, p.fichier === "index.html" ? "1.0" : "0.8"]),
+    [SITE_URL + "blog/", articles[0]?.date || auj, "0.6"],
+    ...articles.map((a) => [SITE_URL + "blog/" + a.slug + ".html", a.date, "0.5"])];
+  writeFileSync(join(site, "sitemap.xml"), `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+${urls.map(([u, d, p]) => `  <url><loc>${esc(u)}</loc><lastmod>${d}</lastmod><priority>${p}</priority></url>`).join("\n")}
+</urlset>
+`);
 
   writeFileSync(join(sortie, "articles.json"), JSON.stringify({
     articles: articles.map(({ html, brouillon, ...reste }) => ({ ...reste, image: cheminImage(reste.image, ""), url: `blog/${reste.slug}.html` })),

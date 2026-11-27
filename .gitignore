@@ -1,3 +1,4 @@
 node_modules/
 # pages générées à chaque publication à partir du dossier articles/
 site/blog/
+site/sitemap.xml

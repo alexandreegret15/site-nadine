@@ -1,0 +1,56 @@
+{
+ "@type": [
+  "RealEstateAgent",
+  "LocalBusiness"
+ ],
+ "@id": "https://immobilier-normandie-nm.fr/#nadine",
+ "name": "Nadine Malfilatre Immobilier",
+ "alternateName": "Nadine Malfilatre, conseillère immobilière Propriétés Privées",
+ "description": "Conseillère immobilière du réseau Propriétés Privées depuis 25 ans : estimation, vente et achat de biens à Honfleur, Beuzeville, Pont-l'Évêque et sur la Côte Normande.",
+ "url": "https://immobilier-normandie-nm.fr/",
+ "logo": "https://immobilier-normandie-nm.fr/img/logo-nm-512.png",
+ "image": "https://immobilier-normandie-nm.fr/img/partage.jpg",
+ "telephone": "+33681516289",
+ "email": "n.malfilatre@proprietes-privees.com",
+ "address": {
+  "@type": "PostalAddress",
+  "addressLocality": "Honfleur",
+  "postalCode": "14600",
+  "addressRegion": "Normandie",
+  "addressCountry": "FR"
+ },
+ "areaServed": [
+  {
+   "@type": "City",
+   "name": "Honfleur"
+  },
+  {
+   "@type": "City",
+   "name": "Beuzeville"
+  },
+  {
+   "@type": "City",
+   "name": "Pont-l'Évêque"
+  },
+  {
+   "@type": "AdministrativeArea",
+   "name": "Côte Normande"
+  }
+ ],
+ "priceRange": "Estimation offerte",
+ "knowsLanguage": "fr",
+ "parentOrganization": {
+  "@type": "Organization",
+  "name": "Propriétés Privées",
+  "url": "https://www.proprietes-privees.com/"
+ },
+ "founder": {
+  "@type": "Person",
+  "name": "Nadine Malfilatre",
+  "jobTitle": "Conseillère immobilière",
+  "image": "https://immobilier-normandie-nm.fr/img/nadine.webp"
+ },
+ "sameAs": [
+  "https://www.proprietes-privees.com/negociateur/nadine.malfilatre"
+ ]
+}

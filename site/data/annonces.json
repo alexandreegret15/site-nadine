@@ -36,7 +36,8 @@
         "https://images.proprietes-privees.com/annonce/468698NMAL/PROPRIETES-PRIVEES-468698NMAL-6.jpg",
         "https://images.proprietes-privees.com/annonce/468698NMAL/PROPRIETES-PRIVEES-468698NMAL-7.jpg",
         "https://images.proprietes-privees.com/annonce/468698NMAL/PROPRIETES-PRIVEES-468698NMAL-8.jpg"
-      ]
+      ],
+      "vignette": "photos/468698NMAL/vignette.webp"
     },
     {
       "ref": "471481NMAL",
@@ -70,7 +71,8 @@
         "https://images.proprietes-privees.com/annonce/471481NMAL/PROPRIETES-PRIVEES-471481NMAL-5.jpg",
         "https://images.proprietes-privees.com/annonce/471481NMAL/PROPRIETES-PRIVEES-471481NMAL-6.jpg",
         "https://images.proprietes-privees.com/annonce/471481NMAL/PROPRIETES-PRIVEES-471481NMAL-7.jpg"
-      ]
+      ],
+      "vignette": "photos/471481NMAL/vignette.webp"
     },
     {
       "ref": "471460NMAL",
@@ -108,7 +110,8 @@
         "https://images.proprietes-privees.com/annonce/471460NMAL/PROPRIETES-PRIVEES-471460NMAL-7.jpg",
         "https://images.proprietes-privees.com/annonce/471460NMAL/PROPRIETES-PRIVEES-471460NMAL-8.jpg",
         "https://images.proprietes-privees.com/annonce/471460NMAL/PROPRIETES-PRIVEES-471460NMAL-9.jpg"
-      ]
+      ],
+      "vignette": "photos/471460NMAL/vignette.webp"
     },
     {
       "ref": "471331NMAL",
@@ -154,7 +157,8 @@
         "https://images.proprietes-privees.com/annonce/471331NMAL/PROPRIETES-PRIVEES-471331NMAL-11.jpg",
         "https://images.proprietes-privees.com/annonce/471331NMAL/PROPRIETES-PRIVEES-471331NMAL-12.jpg",
         "https://images.proprietes-privees.com/annonce/471331NMAL/PROPRIETES-PRIVEES-471331NMAL-13.jpg"
-      ]
+      ],
+      "vignette": "photos/471331NMAL/vignette.webp"
     },
     {
       "ref": "470732NMAL",
@@ -196,7 +200,8 @@
         "https://images.proprietes-privees.com/annonce/470732NMAL/PROPRIETES-PRIVEES-470732NMAL-9.jpg",
         "https://images.proprietes-privees.com/annonce/470732NMAL/PROPRIETES-PRIVEES-470732NMAL-10.jpg",
         "https://images.proprietes-privees.com/annonce/470732NMAL/PROPRIETES-PRIVEES-470732NMAL-11.jpg"
-      ]
+      ],
+      "vignette": "photos/470732NMAL/vignette.webp"
     },
     {
       "ref": "466586NMAL",
@@ -240,7 +245,8 @@
         "https://images.proprietes-privees.com/annonce/466586NMAL/PROPRIETES-PRIVEES-466586NMAL-10.jpg",
         "https://images.proprietes-privees.com/annonce/466586NMAL/PROPRIETES-PRIVEES-466586NMAL-11.jpg",
         "https://images.proprietes-privees.com/annonce/466586NMAL/PROPRIETES-PRIVEES-466586NMAL-12.jpg"
-      ]
+      ],
+      "vignette": "photos/466586NMAL/vignette.webp"
     }
   ]
 }

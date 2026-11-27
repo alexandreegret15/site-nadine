@@ -1,0 +1,54 @@
+{
+ "@type": "FAQPage",
+ "@id": "https://immobilier-normandie-nm.fr/#faq",
+ "mainEntity": [
+  {
+   "@type": "Question",
+   "name": "L'estimation de mon bien est-elle vraiment gratuite ?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Oui. Je me déplace chez vous, je visite le bien et je vous remets un avis de valeur écrit, gratuitement et sans engagement de vente."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Sur quels secteurs intervenez-vous ?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Principalement Honfleur, Beuzeville, Pont-l'Évêque et les communes de la Côte Normande autour de l'estuaire de la Seine et du Pays d'Auge."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Comment est calculée l'estimation en ligne ?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Elle s'appuie sur les ventes réellement signées chez le notaire (base publique DVF de la DGFiP) dans votre commune ou autour. C'est une fourchette indicative : seule une visite permet un avis de valeur précis."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Quels sont vos honoraires ?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Mes honoraires suivent le barème du réseau Propriétés Privées, consultable en ligne. Les prix affichés sur mes annonces sont toujours honoraires inclus."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Pourquoi vendre avec une conseillère Propriétés Privées ?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Vous avez une seule interlocutrice, disponible et qui se déplace chez vous, avec la diffusion et les outils d'un réseau national. Je vous accompagne de l'estimation jusqu'à la signature chez le notaire."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Qu'est-ce qu'un apporteur d'affaires ?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "C'est une personne qui me recommande un proche, un voisin ou un collègue qui souhaite vendre. Si la vente se conclut grâce à cette recommandation, l'apporteur d'affaires est remercié par une rémunération versée après la signature de l'acte de vente."
+   }
+  }
+ ]
+}
