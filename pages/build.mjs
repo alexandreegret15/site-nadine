@@ -13,20 +13,20 @@ const lire = (f) => readFileSync(join(ici, f), "utf8");
 const esc = (s) => String(s).replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;");
 
 export const PAGES = [
-  { fichier: "index.html", titre: "Nadine Malfilatre, immobilier à Honfleur et Pont-l'Évêque",
-    description: "Nadine Malfilatre, conseillère immobilière Propriétés Privées depuis 25 ans à Honfleur, Beuzeville et Pont-l'Évêque : estimation offerte, vente et achat de maisons et appartements en Normandie." },
-  { fichier: "biens.html", nom: "Biens à vendre", titre: "Maisons et appartements à vendre à Honfleur | N. Malfilatre",
-    description: "Les biens à vendre de Nadine Malfilatre, conseillère Propriétés Privées : maisons, appartements et terrains à Honfleur, Beuzeville, Pont-l'Évêque et sur la Côte Normande." },
-  { fichier: "estimation.html", nom: "Estimation", titre: "Estimation immobilière gratuite à Honfleur | N. Malfilatre",
+  { fichier: "index.html", titre: "Nadine Malfilatre, conseillère immobilière Côte Normande",
+    description: "Nadine Malfilatre, conseillère immobilière Propriétés Privées depuis 25 ans sur la Côte Normande : estimation offerte, vente et achat de maisons et appartements en Normandie." },
+  { fichier: "biens.html", nom: "Biens à vendre", titre: "Maisons et appartements à vendre Côte Normande | N. Malfilatre",
+    description: "Les biens à vendre de Nadine Malfilatre, conseillère Propriétés Privées : maisons, appartements et terrains sur la Côte Normande." },
+  { fichier: "estimation.html", nom: "Estimation", titre: "Estimation immobilière gratuite Côte Normande | N. Malfilatre",
     description: "Estimez gratuitement votre maison ou votre appartement en Normandie à partir des ventes notariées (DVF), puis obtenez un avis de valeur offert par Nadine Malfilatre." },
-  { fichier: "qui-suis-je.html", nom: "Qui suis-je ?", titre: "Qui suis-je ? Nadine Malfilatre, conseillère à Honfleur",
-    description: "Nadine Malfilatre, 25 ans d'expérience dans l'immobilier, conseillère Propriétés Privées à Honfleur, Beuzeville et Pont-l'Évêque : parcours, services et secteur." },
-  { fichier: "apporteur-affaires.html", nom: "Apporteur d'affaires", titre: "Apporteur d'affaires immobilier à Honfleur | N. Malfilatre",
+  { fichier: "qui-suis-je.html", nom: "Qui suis-je ?", titre: "Qui suis-je ? Nadine Malfilatre, conseillère immobilière",
+    description: "Nadine Malfilatre, 25 ans d'expérience dans l'immobilier, conseillère Propriétés Privées sur la Côte Normande : parcours, services et secteur." },
+  { fichier: "apporteur-affaires.html", nom: "Apporteur d'affaires", titre: "Apporteur d'affaires immobilier Côte Normande | N. Malfilatre",
     description: "Recommandez un proche qui souhaite vendre son bien à Nadine Malfilatre : si la vente se conclut, vous êtes rémunéré à la signature chez le notaire." },
   { fichier: "faq.html", nom: "Questions fréquentes", titre: "Questions fréquentes immobilier | Nadine Malfilatre", faq: true,
-    description: "Estimation gratuite, honoraires, secteur couvert, apporteur d'affaires : les réponses de Nadine Malfilatre, conseillère immobilière à Honfleur." },
-  { fichier: "contact.html", nom: "Contact", titre: "Contact : Nadine Malfilatre, immobilier à Honfleur",
-    description: "Contactez Nadine Malfilatre, conseillère immobilière Propriétés Privées à Honfleur : 06 81 51 62 89, ou par le formulaire en ligne." },
+    description: "Estimation gratuite, honoraires, secteur couvert, apporteur d'affaires : les réponses de Nadine Malfilatre, conseillère immobilière sur la Côte Normande." },
+  { fichier: "contact.html", nom: "Contact", titre: "Contact : Nadine Malfilatre, immobilier Côte Normande",
+    description: "Contactez Nadine Malfilatre, conseillère immobilière Propriétés Privées sur la Côte Normande : 06 81 51 62 89, ou par le formulaire en ligne." },
 ];
 
 export function construirePages() {

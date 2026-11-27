@@ -15,7 +15,7 @@
   --bg:#0D1524; --surface:#142038; --ink:#EEF1F6; --muted:#AEB8CA; --line:#2A3A58;
   --accent:#2B4A7A; --accent-text:#E7CB8E; --accent-ink:#FFFFFF; --warm:#E7CB8E; --band:#111B2F; --ph:#22314D; color-scheme:dark}
 *{box-sizing:border-box}
-html{scroll-behavior:smooth;scroll-padding-top:84px}
+html{scroll-behavior:smooth;scroll-padding-top:130px}
 body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.6}
 img{max-width:100%;display:block}
 [hidden]{display:none!important}
@@ -322,3 +322,18 @@ nav a[aria-current="page"]{color:var(--warm);background:var(--band)}
 .bien:hover .voir{text-decoration:underline}
 .bien:has(.voir:focus-visible){outline:3px solid var(--gold);outline-offset:3px}
 .bien .voir:focus-visible{outline:none}
+
+/* Bandeau du haut : Conseillère immobilière + logo Propriétés Privées, en haut à droite */
+.topbar{border-bottom:1px solid var(--line);font-size:.85rem}
+header .topbar .wrap{display:flex;justify-content:space-between;align-items:center;gap:16px;padding-block:6px}
+.tb-tel{color:var(--muted);text-decoration:none;font-weight:600}
+.tb-tel:hover{color:var(--accent-text)}
+.tb-pp{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--ink);font-weight:700;margin-left:auto}
+.tb-pp img{height:32px;width:auto}
+/* Bouton Estimer aux couleurs de la charte Propriétés Privées */
+nav a.cta{background:var(--pp);color:#fff}
+nav a.cta:hover{background:#C8103F;color:#fff}
+/* Secteur : un seul bloc Côte Normande */
+.secteur-unique{max-width:760px;margin-inline:auto;text-align:center;display:flex;flex-direction:column;align-items:center;gap:22px;background:var(--surface);border:1px solid var(--line);border-top:4px solid var(--gold);border-radius:18px;padding:32px}
+.secteur-unique p{color:var(--muted);font-size:1.05rem}
+@media (max-width:560px){.tb-pp span{font-size:.78rem}.tb-pp img{height:26px}}

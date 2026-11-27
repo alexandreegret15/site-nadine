@@ -68,7 +68,7 @@ function gabarit() {
   let header = prendre(/<header>[\s\S]*?<\/header>/, "header");
   let footer = prendre(/<footer>[\s\S]*?<\/footer>/, "footer");
   // Liens relatifs du site (biens.html, img/…) : un dossier plus haut ; ceux du blog restent sur place
-  const relatifs = (t) => t.replace(/(href|src)="(?![a-z]+:|#|\/)([^"]+)"/g, (m, attr, chemin) =>
+  const relatifs = (t) => t.replace(/(href|src|srcset)="(?![a-z]+:|#|\/)([^"]+)"/g, (m, attr, chemin) =>
     `${attr}="${chemin.startsWith("blog/") ? chemin.slice(5) : "../" + chemin}"`);
   footer = relatifs(footer);
   header = relatifs(header);
@@ -192,12 +192,12 @@ export function construire() {
   writeFileSync(join(sortie, "index.html"), page({
     titre: "Actualités et conseils immobiliers · Nadine Malfilatre",
     chemin: "",
-    description: "Conseils, actualités du marché et nouveautés de Nadine Malfilatre, conseillère immobilière à Honfleur, Beuzeville et Pont-l'Évêque.",
+    description: "Conseils, actualités du marché et nouveautés de Nadine Malfilatre, conseillère immobilière sur la Côte Normande.",
     actif: true,
     corps: `<section class="blog-hero band"><div class="wrap">
   <span class="eyebrow">Actualités</span>
   <h1>Conseils et nouvelles de l'immobilier normand</h1>
-  <p class="lead">Mes conseils pour vendre ou acheter, l'actualité du marché à Honfleur, Beuzeville et Pont-l'Évêque, et les nouveautés de mon activité.</p>
+  <p class="lead">Mes conseils pour vendre ou acheter, l'actualité du marché sur la Côte Normande, et les nouveautés de mon activité.</p>
 </div></section>
 <section><div class="wrap">${liste}</div></section>`,
   }));
