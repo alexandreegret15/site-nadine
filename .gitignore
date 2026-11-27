@@ -2,3 +2,5 @@ node_modules/
 # pages générées à chaque publication à partir du dossier articles/
 site/blog/
 site/sitemap.xml
+# pages des biens, recréées à chaque publication à partir de site/data/annonces.json
+site/biens/

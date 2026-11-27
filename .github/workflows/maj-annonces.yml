@@ -40,6 +40,10 @@ jobs:
         if: steps.test.outcome == 'success'
         continue-on-error: true
         run: npm run annonces
+      # Réécrit les pages avec les annonces du jour (accueil, Biens à vendre, une page par bien, plan du site)
+      - name: Reconstruire les pages avec les annonces du jour
+        if: steps.annonces.outcome == 'success'
+        run: npm run blog
       - name: Enregistrer les changements
         if: steps.annonces.outcome == 'success'
         run: |

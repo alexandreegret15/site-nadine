@@ -23,4 +23,12 @@ assert.equal(a.pieces, 1);
 assert.equal(a.exclusivite, true);
 assert.deepEqual(a.photos, [img(1), img(2), img(10)]);
 assert.match(a.description, /état brut/);
+// Structure réelle vue le 27/11/2026 : icône dans .trade-location, titre « Description » dans .trade-description
+const reel = `<html><body><h1 class="trade-title">Appartement Le Havre 4 pièce(s)</h1><p class="trade-reference">Ref. 468698NMAL</p>
+<p class="trade-location"><img src="data:image/png;base64,AAAA"> LE HAVRE (76600)</p><p>163 000 €</p>
+<div class="trade-description"><h2 class="subtitle">Description</h2><p>Proche centre du Havre, ce duplex.<br><br>Situé au 1er étage.<br>Prix : 175 000 euros honoraire à charge vendeur.</p></div></body></html>`;
+const b = extraireAnnonce(reel, "468698NMAL");
+assert.equal(b.ville, "LE HAVRE");
+assert.equal(b.cp, "76600");
+assert.equal(b.description, "Proche centre du Havre, ce duplex.\n\nSitué au 1er étage.\nPrix : 175 000 euros honoraire à charge vendeur.");
 console.log("OK : extraction validée sur la page d'exemple");

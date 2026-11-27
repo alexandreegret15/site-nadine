@@ -2,12 +2,14 @@
   <img src="img/port-honfleur.jpg" srcset="img/port-honfleur-1024.webp 1024w, img/port-honfleur-1920.webp 1920w" sizes="100vw" alt="" width="1920" height="1159" fetchpriority="high" decoding="async">
   <div class="wrap">
     <nav class="ariane" aria-label="Fil d'Ariane"><a href="index.html">Accueil</a><span aria-hidden="true">›</span><span aria-current="page">Biens à vendre</span></nav>
-    <h1>Biens immobiliers à vendre sur la Côte Normande</h1>
-    <p class="lead">Maisons, appartements et terrains que je vends en ce moment sur la Côte Normande.</p>
+    <h1>Biens immobiliers à vendre à Honfleur et sur la Côte Normande</h1>
+    <p class="lead">Maisons, appartements et terrains que je vends en ce moment à Honfleur, Beuzeville et alentours.</p>
   </div>
 </section>
 <section id="biens" class="band"><div class="wrap">
-  <p id="maj">Chargement des annonces…</p>
-  <div class="biens" id="liste"></div>
+  {{maj}}
+  <div class="biens" id="liste">
+{{annonces}}
+  </div>
   <p class="note">Prix affichés honoraires inclus. Le détail de chaque annonce, les diagnostics et le barème d'honoraires sont consultables sur la fiche Propriétés Privées.</p>
 </div></section>

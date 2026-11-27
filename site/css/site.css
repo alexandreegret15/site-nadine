@@ -337,3 +337,55 @@ nav a.cta:hover{background:#C8103F;color:#fff}
 .secteur-unique{max-width:760px;margin-inline:auto;text-align:center;display:flex;flex-direction:column;align-items:center;gap:22px;background:var(--surface);border:1px solid var(--line);border-top:4px solid var(--gold);border-radius:18px;padding:32px}
 .secteur-unique p{color:var(--muted);font-size:1.05rem}
 @media (max-width:560px){.tb-pp span{font-size:.78rem}.tb-pp img{height:26px}}
+
+/* Avis clients (repris de la fiche Google) */
+.avis .wrap{padding-block:64px}
+.avis-liste{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,260px),1fr));gap:20px}
+.avis-carte{margin:0;background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:22px;display:flex;flex-direction:column;gap:12px}
+.avis-carte blockquote{margin:0;font-size:.95rem;line-height:1.6}
+.avis-carte figcaption{font-size:.85rem;color:var(--muted);margin-top:auto}
+.etoiles{color:var(--gold);letter-spacing:2px;font-size:1.05rem}
+.note.centre{text-align:center;max-width:46em;margin-inline:auto;margin-top:22px}
+
+/* Page d'un bien */
+.bien-page .wrap{padding-block:32px 64px}
+.ariane-clair{color:var(--muted)}
+.ariane-clair a{color:var(--accent-text)}
+.bien-tete{display:flex;justify-content:space-between;align-items:flex-end;gap:16px 32px;flex-wrap:wrap;margin-block:18px 22px}
+.bien-tete h1{font-size:clamp(1.7rem,4vw,2.6rem);color:var(--accent-text)}
+.bien-tete .lieu{margin:8px 0 0}
+.bien-tete .prix{margin:0;font-size:clamp(1.6rem,3.4vw,2.2rem);text-align:right}
+.galerie{display:grid;grid-template-columns:2fr 1fr 1fr;grid-auto-rows:160px;gap:8px;border-radius:18px;overflow:hidden;margin-bottom:36px}
+.galerie a{display:block;background:var(--ph);min-width:0}
+.galerie a:first-child{grid-row:span 2}
+.galerie img{width:100%;height:100%;object-fit:cover;display:block}
+.bien-grille{display:grid;grid-template-columns:minmax(0,1fr) 320px;gap:40px;align-items:start}
+.bien-texte h2{font-size:1.6rem;margin-block:0 14px}
+.bien-texte h2:not(:first-child){margin-top:32px}
+.bien-texte h3{font-family:var(--body);font-size:1rem;font-weight:700;margin-top:18px}
+.bien-texte p,.bien-texte li{max-width:42em}
+.mentions{padding-left:1.2em;color:var(--muted);font-size:.92rem;display:grid;gap:6px}
+.bien-cote{position:sticky;top:140px;display:grid;gap:20px}
+.carac{margin:0;background:var(--band);border:1px solid var(--line);border-radius:16px;padding:18px 20px;display:grid;gap:10px}
+.carac div{display:flex;justify-content:space-between;gap:12px;border-bottom:1px solid var(--line);padding-bottom:8px}
+.carac div:last-child{border-bottom:0;padding-bottom:0}
+.carac dt{color:var(--muted)}
+.carac dd{margin:0;font-weight:700}
+.bien-contact{background:var(--navy);color:#fff;border-radius:16px;padding:22px;display:grid;gap:12px}
+.bien-contact p{margin:0;color:#C9D1DF}
+.bien-contact .btn{justify-content:center;text-align:center}
+.bien-contact .btn.ghost{color:#fff;border-color:rgba(255,255,255,.5)}
+@media (max-width:860px){
+  .bien-grille{grid-template-columns:1fr}
+  .bien-cote{position:static}
+  .bien-tete .prix{text-align:left}
+  .galerie{grid-template-columns:1fr 1fr;grid-auto-rows:120px}
+  .galerie a:first-child{grid-column:span 2;grid-row:span 2}
+  .galerie a:nth-child(n+6){display:none}
+}
+.galerie{grid-template-rows:repeat(2,190px);grid-auto-rows:0}
+.plus-photos{margin:-24px 0 36px}
+.plus-photos summary{cursor:pointer;font-weight:700;color:var(--accent-text);padding:6px 0}
+.galerie-toutes{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,220px),1fr));gap:8px;margin-top:12px}
+.galerie-toutes img{width:100%;aspect-ratio:3/2;object-fit:cover;border-radius:10px;display:block}
+@media (max-width:860px){.galerie{grid-template-rows:repeat(3,120px)}.galerie a:nth-child(n+6){display:block}}

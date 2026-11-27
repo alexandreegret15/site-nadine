@@ -60,11 +60,13 @@ export function extraireAnnonce(html, ref) {
   const chambres = nombre(texte.match(/(\d+)\s*chambres?/i)?.[1]);
   const terrain = nombre(texte.match(/terrain\s*(?:de\s*|:\s*)?(\d{1,3}(?:[\s  ]?\d{3})*)\s*m²/i)?.[1]);
 
-  // Ville : premier élément dont le texte seul a la forme "Ville (27210)"
-  let lieu = null;
+  // Ville : bloc « .trade-location » (« LE HAVRE (76600) », précédé d'une icône), sinon premier
+  // élément dont le texte a la forme « Ville (27210) ». L'icône <img> ne doit pas bloquer la lecture.
+  const forme = /^([^()]{2,60}?)\s*\((\d{5})\)$/;
+  let lieu = $(".trade-location").first().text().trim().match(forme);
   $("body *").each((_, el) => {
-    if (lieu || $(el).children().length) return;
-    lieu = $(el).text().trim().match(/^([^()]{2,50}?)\s*\((\d{5})\)$/);
+    if (lieu || $(el).children().not("img,svg,i").length) return;
+    lieu = $(el).text().trim().match(forme);
   });
   const ville = ld.address?.addressLocality || lieu?.[1]?.trim() || "";
   const cp = ld.address?.postalCode || lieu?.[2] || "";
@@ -77,10 +79,17 @@ export function extraireAnnonce(html, ref) {
   const reImg = new RegExp(`https://images\\.proprietes-privees\\.com/annonce/${ref}/[\\w.-]+?-(\\d+)\\.jpe?g`, "g");
   for (const m of html.matchAll(reImg)) if (!photos.has(+m[1])) photos.set(+m[1], m[0]);
 
+  // Description : paragraphe de « .trade-description » sans son titre « Description »,
+  // en gardant les retours à la ligne (<br>) pour refaire les paragraphes sur le site.
+  const blocDesc = $(".trade-description p").first().length ? $(".trade-description p").first() : $('[class*="description" i]').first().clone().find("h1,h2,h3").remove().end();
   const description =
-    $('[class*="description" i]').first().text().trim().replace(/\s+/g, " ") ||
+    (blocDesc.html() || "").replace(/<br\s*\/?>/gi, "\n").replace(/<[^>]+>/g, "").replace(/&nbsp;|&#160;/g, " ")
+      .replace(/&amp;/g, "&").replace(/&#39;|&apos;/g, "'").replace(/&quot;/g, '"').replace(/[ \t]+/g, " ").replace(/^\s*Description\s*/i, "").trim() ||
     ld.description ||
     meta("og:description");
+
+  // DPE/GES écrits dans l'annonce elle-même (la page affiche aussi des biens similaires)
+  const dpeTxt = description.match(/DPE\s*:?\s*([A-G])(?![a-zà-ÿ])[^A-Z]{0,40}?GES\s*:?\s*([A-G])(?![a-zà-ÿ])/);
 
   return {
     ref,
@@ -93,8 +102,8 @@ export function extraireAnnonce(html, ref) {
     pieces,
     chambres,
     terrain,
-    dpe,
-    ges,
+    dpe: dpeTxt ? dpeTxt[1] : description ? null : dpe,
+    ges: dpeTxt ? dpeTxt[2] : description ? null : ges,
     exclusivite: /exclusivit/i.test(texte.slice(0, 4000)),
     description,
     photos: [...photos.entries()].sort((a, b) => a[0] - b[0]).map((e) => e[1]),
