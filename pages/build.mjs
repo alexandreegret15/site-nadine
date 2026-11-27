@@ -69,7 +69,7 @@ export function construirePages() {
 <script type="application/ld+json">
 ${JSON.stringify({ "@context": "https://schema.org", "@graph": graphe }, null, 1)}
 </script>
-<link rel="preload" as="image" href="img/port-honfleur.svg" fetchpriority="high">
+<link rel="preload" as="image" href="img/port-honfleur.jpg" imagesrcset="img/port-honfleur-1024.webp 1024w, img/port-honfleur-1920.webp 1920w" imagesizes="100vw" fetchpriority="high">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;700;800&family=Playfair+Display:wght@500;600;700&display=swap">
