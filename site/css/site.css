@@ -64,8 +64,8 @@ nav a.cta:hover{background:var(--gold-light);color:#13243F}
 .btn{display:inline-block;padding:13px 26px;border-radius:999px;font-weight:700;text-decoration:none;border:2px solid var(--accent);font-family:var(--body);font-size:1.02rem;cursor:pointer;text-align:center}
 .btn.primary{background:var(--accent);color:var(--accent-ink)}
 .btn.primary:hover{background:var(--navy-2);border-color:var(--navy-2)}
-.btn.or{background:var(--gold);border-color:var(--gold);color:#13243F}
-.btn.or:hover{background:var(--gold-light);border-color:var(--gold-light)}
+.btn.or{background:var(--pp);border-color:var(--pp);color:#fff}
+.btn.or:hover{background:#C8103F;border-color:#C8103F;color:#fff}
 .btn.ghost{background:transparent;color:var(--accent-text)}
 .btn.ghost:hover{background:var(--band)}
 .btn.clair{background:transparent;border-color:rgba(255,255,255,.75);color:#fff}

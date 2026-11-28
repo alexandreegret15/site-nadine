@@ -123,8 +123,8 @@ nav a[aria-current]{color:var(--accent-text)}
 .appel{margin-top:44px;background:var(--accent);color:#fff;border-radius:20px;padding:28px;display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap}
 .appel h2{color:#fff;font-size:1.5rem}
 .appel p{opacity:.92;margin-top:6px}
-.appel .btn{background:var(--gold,#fff);color:#13243F;border-color:var(--gold,#fff)}
-.appel .btn:hover{background:var(--band);border-color:var(--band)}
+.appel .btn{background:var(--pp);color:#fff;border-color:var(--pp)}
+.appel .btn:hover{background:#C8103F;border-color:#C8103F;color:#fff}
 .autres .wrap{padding-block:48px 64px}
 .brouillon{background:#FFF4D6;border:2px dashed var(--gold);border-radius:14px;padding:16px 20px;margin-bottom:28px;font-size:.95rem}
 .brouillon ul{margin:8px 0 0;padding-left:1.2em}
