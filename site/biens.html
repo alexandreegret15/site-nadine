@@ -119,36 +119,42 @@
     {
      "@type": "ListItem",
      "position": 1,
+     "url": "https://immobilier-normandie-nm.fr/biens/duplex-honfleur-472833nmal.html",
+     "name": "Duplex 3 pièces de 73 m² à Honfleur"
+    },
+    {
+     "@type": "ListItem",
+     "position": 2,
      "url": "https://immobilier-normandie-nm.fr/biens/appartement-le-havre-468698nmal.html",
      "name": "Appartement 4 pièces de 90 m² au Havre"
     },
     {
      "@type": "ListItem",
-     "position": 2,
+     "position": 3,
      "url": "https://immobilier-normandie-nm.fr/biens/appartement-la-riviere-saint-sauveur-471481nmal.html",
      "name": "Appartement 3 pièces de 55 m² à La Rivière-Saint-Sauveur"
     },
     {
      "@type": "ListItem",
-     "position": 3,
+     "position": 4,
      "url": "https://immobilier-normandie-nm.fr/biens/maison-saint-pierre-du-val-471460nmal.html",
      "name": "Maison 5 pièces de 115 m² à Saint-Pierre-du-Val"
     },
     {
      "@type": "ListItem",
-     "position": 4,
+     "position": 5,
      "url": "https://immobilier-normandie-nm.fr/biens/maison-honfleur-471331nmal.html",
      "name": "Maison 4 pièces de 87 m² à Honfleur"
     },
     {
      "@type": "ListItem",
-     "position": 5,
+     "position": 6,
      "url": "https://immobilier-normandie-nm.fr/biens/maison-honfleur-470732nmal.html",
      "name": "Maison 5 pièces de 169 m² à Honfleur"
     },
     {
      "@type": "ListItem",
-     "position": 6,
+     "position": 7,
      "url": "https://immobilier-normandie-nm.fr/biens/plateau-beuzeville-466586nmal.html",
      "name": "Plateau 1 pièce de 96 m² à Beuzeville"
     }
@@ -158,9 +164,8 @@
 }
 </script>
 <link rel="preload" as="image" href="img/port-honfleur.jpg" imagesrcset="img/port-honfleur-1024.webp 1024w, img/port-honfleur-1920.webp 1920w" imagesizes="100vw" fetchpriority="high">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;700;800&family=Playfair+Display:wght@500;600;700&display=swap">
+<link rel="preload" href="fonts/figtree.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/playfair-display.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="css/site.css">
 </head>
 <body>
@@ -192,7 +197,7 @@
   </div>
 </section>
 <section id="biens" class="band"><div class="wrap">
-  <p id="maj">6 biens en vente · liste mise à jour le 27 novembre 2026.</p>
+  <p id="maj">7 biens en vente · liste mise à jour le 28 novembre 2026.</p>
   <form class="filtres" id="filtres" aria-label="Filtrer les biens">
     <fieldset class="f-type"><legend>Type de bien</legend>
       <label><input type="radio" name="f-type" value="" checked><span>Tous</span></label>
@@ -200,23 +205,33 @@
       <label><input type="radio" name="f-type" value="appartement"><span>Appartement</span></label>
       <label><input type="radio" name="f-type" value="autre"><span>Autre</span></label>
     </fieldset>
-    <label>Commune<select id="f-ville"><option value="">Toutes</option><option value="Beuzeville">Beuzeville (1)</option><option value="Honfleur">Honfleur (2)</option><option value="La Rivière-Saint-Sauveur">La Rivière-Saint-Sauveur (1)</option><option value="Le Havre">Le Havre (1)</option><option value="Saint-Pierre-du-Val">Saint-Pierre-du-Val (1)</option></select></label>
+    <label>Commune<select id="f-ville"><option value="">Toutes</option><option value="Beuzeville">Beuzeville (1)</option><option value="Honfleur">Honfleur (3)</option><option value="La Rivière-Saint-Sauveur">La Rivière-Saint-Sauveur (1)</option><option value="Le Havre">Le Havre (1)</option><option value="Saint-Pierre-du-Val">Saint-Pierre-du-Val (1)</option></select></label>
     <label>Pièces<select id="f-pieces"><option value="0">Peu importe</option><option value="1">1 et +</option><option value="2">2 et +</option><option value="3">3 et +</option><option value="4">4 et +</option><option value="5">5 et +</option></select></label>
     <label>Prix min (€)<input id="f-pmin" type="number" inputmode="numeric" min="0" step="5000" placeholder="Min"></label>
     <label>Prix max (€)<input id="f-pmax" type="number" inputmode="numeric" min="0" step="5000" placeholder="Max"></label>
     <label>Surface min (m²)<input id="f-smin" type="number" inputmode="numeric" min="0" step="5" placeholder="Min"></label>
     <label>Trier par<select id="f-tri"><option value="">Les plus récents</option><option value="prix-asc">Prix croissant</option><option value="prix-desc">Prix décroissant</option><option value="surface-desc">Surface décroissante</option></select></label>
-    <div class="f-bas"><p id="f-compte" aria-live="polite">6 biens</p><button class="btn ghost" type="reset">Effacer les filtres</button></div>
+    <div class="f-bas"><p id="f-compte" aria-live="polite">7 biens</p><button class="btn ghost" type="reset">Effacer les filtres</button></div>
   </form>
   <div class="vide" id="f-vide" hidden>Aucun bien ne correspond à ces critères. Élargissez la recherche ou <a href="contact.html">dites-moi ce que vous cherchez</a> : je vous préviens dès qu'un bien correspond.</div>
   <div class="biens" id="liste">
+<article class="bien" data-type="appartement" data-ville="Honfleur" data-pieces="3" data-prix="295000" data-surface="73">
+  <div class="photo"><picture><source srcset="photos/472833NMAL/vignette.webp" type="image/webp"><img src="photos/472833NMAL/1.jpg" alt="Duplex 3 pièces de 73 m² à Honfleur" loading="lazy" decoding="async" width="800" height="533"></picture><span class="nb">14 photos</span></div>
+  <div class="info">
+    <h3>Duplex 3 pièces de 73 m² à Honfleur</h3>
+    <span class="lieu">Honfleur (14600)</span>
+    <div class="specs"><span>73 m²</span><span>3 pièces</span><span>2 ch.</span><span>Réf. 472833NMAL</span></div>
+    <p class="desc">A Honfleur, au sein d'un immeuble ancien bien entretenu datant de 1900, ce duplex de 73,9 m2 Carrez (82,53 m2 au sol) se situe au 3e étage d'une copropriété de quatre niveaux. Il développe 4 pièces dont 2 chambres, dans une ambiance chaleureuse portée par un parquet posé sur toute la pièce de vie et une double exposition est/ouest.</p>
+    <div class="bottom"><span class="prix">295 000 €<small>4 041 €/m²</small></span><span class="dpe E">DPE E</span><a class="voir" href="biens/duplex-honfleur-472833nmal.html">Voir le bien →</a></div>
+  </div>
+</article>
 <article class="bien" data-type="appartement" data-ville="Le Havre" data-pieces="4" data-prix="163000" data-surface="90">
   <div class="photo"><picture><source srcset="photos/468698NMAL/vignette.webp" type="image/webp"><img src="photos/468698NMAL/1.jpg" alt="Appartement 4 pièces de 90 m² au Havre" loading="lazy" decoding="async" width="800" height="533"></picture><span class="nb">8 photos</span></div>
   <div class="info">
     <h3>Appartement 4 pièces de 90 m² au Havre</h3>
     <span class="lieu">Le Havre (76600)</span>
     <div class="specs"><span>90 m²</span><span>4 pièces</span><span>3 ch.</span><span>Réf. 468698NMAL</span></div>
-    <p class="desc">Proche centre du Havre, ce duplex de 90 m² offre des volumes confortables et une disposition agréable sur deux niveaux. A proximité des écoles, des commerces et des transports en commun, il bénéficie d'un emplacement pratique pour faciliter le quotidien. Situé au 1er étage d'un immeuble bien entretenu, l'appartement profite d'une exposition est-ouest. Le premier niveau comprend une cuisine ouverte</p>
+    <p class="desc">Proche centre du Havre, ce duplex de 90 m² offre des volumes confortables et une disposition agréable sur deux niveaux. A proximité des écoles, des commerces et des transports en commun, il bénéficie d'un emplacement pratique pour faciliter le quotidien.</p>
     <div class="bottom"><span class="prix">163 000 €<small>1 811 €/m²</small></span><span class="dpe D">DPE D</span><a class="voir" href="biens/appartement-le-havre-468698nmal.html">Voir le bien →</a></div>
   </div>
 </article>
@@ -226,7 +241,7 @@
     <h3>Appartement 3 pièces de 55 m² à La Rivière-Saint-Sauveur</h3>
     <span class="lieu">La Rivière-Saint-Sauveur (14600)</span>
     <div class="specs"><span>55 m²</span><span>3 pièces</span><span>2 ch.</span><span>Réf. 471481NMAL</span></div>
-    <p class="desc">Situé à La Rivière-Saint-Sauveur, à quelques minutes d'Honfleur, découvrez cet appartement de 55 m² situé au 2? étage d'une résidence sécurisée. Il comprend une entrée, un séjour avec cuisine ouverte donnant accès à un grand balcon, deux chambres avec placards, une salle de bains, des WC séparés ainsi qu'un débarras pouvant être aménagé en bureau ou cellier. Deux places de stationnement privatives</p>
+    <p class="desc">Situé à La Rivière-Saint-Sauveur, à quelques minutes d'Honfleur, découvrez cet appartement de 55 m² situé au 2? étage d'une résidence sécurisée.</p>
     <div class="bottom"><span class="prix">153 000 €<small>2 782 €/m²</small></span><span class="dpe C">DPE C</span><a class="voir" href="biens/appartement-la-riviere-saint-sauveur-471481nmal.html">Voir le bien →</a></div>
   </div>
 </article>
@@ -236,7 +251,7 @@
     <h3>Maison 5 pièces de 115 m² à Saint-Pierre-du-Val</h3>
     <span class="lieu">Saint-Pierre-du-Val (27210)</span>
     <div class="specs"><span>115 m²</span><span>5 pièces</span><span>4 ch.</span><span>Terrain 1 600 m²</span><span>Réf. 471460NMAL</span></div>
-    <p class="desc">A seulement 15 minutes de Honfleur, 10 minutes du pont de Normandie au calme d'un environnement verdoyant, cette maison à combles offre un cadre de vie agréable et fonctionnel, idéal pour une famille en quête d'espace et de tranquillité. Dès l'entrée, on découvre un intérieur lumineux et bien agencé. Le rez-de-chaussée s'ouvre sur une cuisine conviviale, ouverte sur un séjour-salon spacieux, parfa</p>
+    <p class="desc">A seulement 15 minutes de Honfleur, 10 minutes du pont de Normandie au calme d'un environnement verdoyant, cette maison à combles offre un cadre de vie agréable et fonctionnel, idéal pour une famille en quête d'espace et de tranquillité.</p>
     <div class="bottom"><span class="prix">262 000 €<small>2 278 €/m²</small></span><span class="dpe E">DPE E</span><a class="voir" href="biens/maison-saint-pierre-du-val-471460nmal.html">Voir le bien →</a></div>
   </div>
 </article>
@@ -256,7 +271,7 @@
     <h3>Maison 5 pièces de 169 m² à Honfleur</h3>
     <span class="lieu">Honfleur (14600)</span>
     <div class="specs"><span>169 m²</span><span>5 pièces</span><span>3 ch.</span><span>Terrain 1 925 m²</span><span>Réf. 470732NMAL</span></div>
-    <p class="desc">Située sur les hauteurs d'Honfleur, dans un environnement calme et agréable, cette maison contemporaine construite en 2015 développe environ 156 m² habitables sur un beau terrain de 1 925 m². Parfaitement entretenue, elle offre de beaux volumes et un agencement fonctionnel. Dès l'entrée, vous découvrirez un agréable séjour-salon avec cheminée, une cuisine ouverte aménagée et équipée, ainsi qu'une </p>
+    <p class="desc">Située sur les hauteurs d'Honfleur, dans un environnement calme et agréable, cette maison contemporaine construite en 2015 développe environ 156 m² habitables sur un beau terrain de 1 925 m².</p>
     <div class="bottom"><span class="prix">542 000 €<small>3 207 €/m²</small></span><span class="dpe D">DPE D</span><a class="voir" href="biens/maison-honfleur-470732nmal.html">Voir le bien →</a></div>
   </div>
 </article>
@@ -266,7 +281,7 @@
     <h3>Plateau 1 pièce de 96 m² à Beuzeville</h3>
     <span class="lieu">Beuzeville (27210)</span>
     <div class="specs"><span>96 m²</span><span>1 pièce</span><span>Réf. 466586NMAL</span></div>
-    <p class="desc">En plein coeur du centre-ville de Beuzeville, découvrez ce bien atypique offrant un très beau potentiel d'aménagement. Situé au quatrième et dernier étage d'une copropriété, ce vaste grenier à aménager développe une superficie mesurée de 92,40 m², à laquelle s'ajoutent environ 33,10 m² de surface sous 1,80 m de hauteur, soit une surface au sol particulièrement intéressante pour imaginer un véritab</p>
+    <p class="desc">En plein coeur du centre-ville de Beuzeville, découvrez ce bien atypique offrant un très beau potentiel d'aménagement.</p>
     <div class="bottom"><span class="prix">99 900 €<small>1 041 €/m²</small></span><a class="voir" href="biens/plateau-beuzeville-466586nmal.html">Voir le bien →</a></div>
   </div>
 </article>
@@ -283,7 +298,7 @@
   <div class="cols">
     <div><b>À propos</b><a href="qui-suis-je.html">Qui suis-je ?</a><a href="immobilier-honfleur.html">Immobilier à Honfleur</a><a href="immobilier-beuzeville.html">Immobilier à Beuzeville</a><a href="immobilier-pont-l-eveque.html">Immobilier à Pont-l'Évêque</a><a href="faq.html">Questions fréquentes</a><a href="blog/index.html">Actualités</a></div>
     <div><b>Vos projets</b><a href="biens.html">Acheter</a><a href="qui-suis-je.html#services">Vendre</a><a href="estimation.html">Estimer mon bien</a><a href="apporteur-affaires.html">Apporteur d'affaires</a></div>
-    <div><b>Liens pratiques</b><a href="https://www.proprietes-privees.com/bareme/NMAL.pdf" target="_blank" rel="noopener">Barème des honoraires (PDF)</a><a href="https://www.proprietes-privees.com/negociateur/nadine.malfilatre" target="_blank" rel="noopener">Ma page Propriétés Privées</a><a href="mentions-legales.html">Mentions légales</a><a href="confidentialite.html">Confidentialité</a><a href="sitemap.xml">Plan du site</a></div>
+    <div><b>Liens pratiques</b><a href="https://www.proprietes-privees.com/bareme/NMAL.pdf" target="_blank" rel="noopener">Barème des honoraires (PDF)</a><a href="https://www.proprietes-privees.com/negociateur/nadine.malfilatre" target="_blank" rel="noopener">Ma page Propriétés Privées</a><a href="mentions-legales.html">Mentions légales</a><a href="confidentialite.html">Confidentialité</a><a href="plan-du-site.html">Plan du site</a></div>
     <div><b>Contact</b><a href="tel:+33681516289">06 81 51 62 89</a><a href="mailto:n.malfilatre@proprietes-privees.com">n.malfilatre@proprietes-privees.com</a><span>Côte Normande</span></div>
   </div>
   <div class="legal">

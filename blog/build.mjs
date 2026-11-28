@@ -54,9 +54,13 @@ export function lireArticle(fichier, contenu) {
     date,
     categorie: String(data.categorie || "Actualité").trim(),
     image: data.image ? String(data.image).trim() : "",
+    alt: String(data.alt || "").trim(),
+    aVerifier: [].concat(data.a_verifier || []).map(String),
     resume: String(data.resume || "").trim() || texte.slice(0, 180).replace(/\s\S*$/, "") + "…",
     brouillon: data.brouillon === true || data.brouillon === "true",
     minutes: Math.max(1, Math.round(texte.split(" ").length / 200)),
+    mots: texte.split(" ").length,
+    modifie: dateISO(data.modifie) || null,
     html,
   };
 }
@@ -66,7 +70,7 @@ function gabarit() {
   const accueil = readFileSync(join(site, "index.html"), "utf8");
   const prendre = (re, nom) => { const m = accueil.match(re); if (!m) throw new Error(`Bloc ${nom} introuvable dans site/index.html`); return m[0]; };
   // Polices + feuille de style commune (chemin corrigé : les pages du blog sont un dossier plus bas)
-  const style = prendre(/<link rel="preconnect"[\s\S]*?<link rel="stylesheet" href="css\/site\.css">/, "style").replace('href="css/', 'href="../css/');
+  const style = prendre(/<link rel="preload" href="fonts\/[\s\S]*?<link rel="stylesheet" href="css\/site\.css">/, "style").replace(/href="(css|fonts)\//g, 'href="../$1/');
   let header = prendre(/<header>[\s\S]*?<\/header>/, "header");
   let footer = prendre(/<footer>[\s\S]*?<\/footer>/, "footer");
   // Liens relatifs du site (biens.html, img/…) : un dossier plus haut ; ceux du blog restent sur place
@@ -122,10 +126,12 @@ nav a[aria-current]{color:var(--accent-text)}
 .appel .btn{background:var(--gold,#fff);color:#13243F;border-color:var(--gold,#fff)}
 .appel .btn:hover{background:var(--band);border-color:var(--band)}
 .autres .wrap{padding-block:48px 64px}
+.brouillon{background:#FFF4D6;border:2px dashed var(--gold);border-radius:14px;padding:16px 20px;margin-bottom:28px;font-size:.95rem}
+.brouillon ul{margin:8px 0 0;padding-left:1.2em}
 .autres h2{margin-bottom:24px}
 </style>`;
 
-function page({ titre, description, corps, actif, image, chemin }) {
+function page({ titre, description, corps, actif, image, chemin, graphe }) {
   const url = SITE_URL + "blog/" + (chemin || "");
   const imgAbs = image ? new URL(image, url).href : SITE_URL + "img/partage.jpg";
   const g = gabarit();
@@ -146,7 +152,7 @@ function page({ titre, description, corps, actif, image, chemin }) {
 <meta property="og:description" content="${esc(description)}">
 <meta property="og:image" content="${esc(imgAbs)}">
 <meta name="twitter:card" content="summary_large_image">
-${g.style}
+${graphe ? `<script type="application/ld+json">\n${JSON.stringify({ "@context": "https://schema.org", "@graph": graphe }, null, 1)}\n</script>\n` : ""}${g.style}
 ${cssBlog}
 </head>
 <body>
@@ -178,7 +184,8 @@ export function construire() {
   const fichiers = existsSync(dossierArticles) ? readdirSync(dossierArticles).filter((f) => f.toLowerCase().endsWith(".md")) : [];
   const articles = fichiers
     .map((f) => lireArticle(f, readFileSync(join(dossierArticles, f), "utf8")))
-    .filter((a) => !a.brouillon)
+    // Brouillons : jamais publiés ; visibles seulement dans l'aperçu (BROUILLONS=1 npm run blog)
+    .filter((a) => !a.brouillon || process.env.BROUILLONS === "1")
     .sort((a, b) => b.date.localeCompare(a.date) || a.titre.localeCompare(b.titre));
 
   // deux articles au même nom : on numérote
@@ -196,6 +203,8 @@ export function construire() {
     chemin: "",
     description: "Conseils, actualités du marché et nouveautés de Nadine Malfilatre, conseillère immobilière sur la Côte Normande.",
     actif: true,
+    graphe: [{ "@type": "Blog", "@id": SITE_URL + "blog/#blog", name: "Actualités et conseils immobiliers", url: SITE_URL + "blog/", inLanguage: "fr-FR",
+      author: { "@id": SITE_URL + "#personne" }, blogPost: articles.filter((a) => !a.brouillon).map((a) => ({ "@id": SITE_URL + "blog/" + a.slug + ".html#article" })) }],
     corps: `<section class="blog-hero band"><div class="wrap">
   <span class="eyebrow">Actualités</span>
   <h1>Conseils et nouvelles de l'immobilier normand</h1>
@@ -206,19 +215,29 @@ export function construire() {
 
   for (const a of articles) {
     const autres = articles.filter((x) => x !== a).slice(0, 3);
-    const couv = a.image ? `<div class="couverture"><img src="${esc(cheminImage(a.image))}" alt="" onerror="this.parentNode.remove()"></div>` : "";
+    const couv = a.image ? `<div class="couverture"><img src="${esc(cheminImage(a.image))}" alt="${esc(a.alt)}" onerror="this.parentNode.remove()"></div>` : "";
     writeFileSync(join(sortie, a.slug + ".html"), page({
       titre: `${a.titre} · Nadine Malfilatre`,
       chemin: a.slug + ".html",
       description: a.resume,
       image: a.image ? cheminImage(a.image) : "",
       actif: true,
+      graphe: [{
+        "@type": "BlogPosting", "@id": SITE_URL + "blog/" + a.slug + ".html#article", headline: a.titre, description: a.resume,
+        datePublished: a.date, dateModified: a.modifie || a.date, inLanguage: "fr-FR",
+        mainEntityOfPage: SITE_URL + "blog/" + a.slug + ".html",
+        ...(a.image ? { image: new URL(cheminImage(a.image, ""), SITE_URL).href } : {}),
+        author: { "@id": SITE_URL + "#personne", "@type": "Person", name: "Nadine Malfilatre", url: SITE_URL + "qui-suis-je.html" },
+        publisher: { "@id": SITE_URL + "#nadine" },
+        wordCount: a.mots,
+      }, { "@type": "BreadcrumbList", itemListElement: [["Accueil", SITE_URL], ["Actualités", SITE_URL + "blog/"], [a.titre, SITE_URL + "blog/" + a.slug + ".html"]].map(([name, item], i) => ({ "@type": "ListItem", position: i + 1, name, item })) }],
       corps: `<section class="article-hero band"><div class="wrap">
   <a class="retour" href="index.html">← Toutes les actualités</a>
   <h1>${esc(a.titre)}</h1>
   <div class="meta"><span class="cat">${esc(a.categorie)}</span><time datetime="${a.date}">${dateFR(a.date)}</time><span>· ${a.minutes} min de lecture</span></div>
 </div></section>
 <section class="corps"><div class="wrap">
+  ${a.brouillon ? `<div class="brouillon"><b>Brouillon, non publié : à relire par Nadine.</b>${a.aVerifier.length ? `<ul>${a.aVerifier.map((x) => `<li>${esc(x)}</li>`).join("")}</ul>` : ""}</div>` : ""}
   ${couv}
   <article class="prose">
 ${a.html}
@@ -233,7 +252,7 @@ ${autres.length ? `<section class="autres band"><div class="wrap"><h2>À lire au
   const auj = new Date().toISOString().slice(0, 10);
   const urls = [...PAGES.map((p) => [SITE_URL + (p.fichier === "index.html" ? "" : p.fichier), auj, p.fichier === "index.html" ? "1.0" : "0.8"]),
     [SITE_URL + "blog/", articles[0]?.date || auj, "0.6"],
-    ...articles.map((a) => [SITE_URL + "blog/" + a.slug + ".html", a.date, "0.5"]),
+    ...articles.filter((a) => !a.brouillon).map((a) => [SITE_URL + "blog/" + a.slug + ".html", a.date, "0.5"]),
     ...chargerCommunes().map((c) => [SITE_URL + c.fichier, auj, "0.8"]),
     // Une page par bien à vendre (date = dernière mise à jour des annonces)
     ...(() => { const d = chargerAnnonces(); const j = (d.miseAJour || auj).slice(0, 10); return d.annonces.map((a) => [SITE_URL + a.chemin, j, "0.7"]); })()];
@@ -244,7 +263,7 @@ ${urls.map(([u, d, p]) => `  <url><loc>${esc(u)}</loc><lastmod>${d}</lastmod><pr
 `);
 
   writeFileSync(join(sortie, "articles.json"), JSON.stringify({
-    articles: articles.map(({ html, brouillon, ...reste }) => ({ ...reste, image: cheminImage(reste.image, ""), url: `blog/${reste.slug}.html` })),
+    articles: articles.filter((a) => !a.brouillon).map(({ html, brouillon, aVerifier, alt, mots, modifie, ...reste }) => ({ ...reste, image: cheminImage(reste.image, ""), url: `blog/${reste.slug}.html` })),
   }, null, 2));
   return articles;
 }
