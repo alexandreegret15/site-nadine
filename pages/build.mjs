@@ -6,6 +6,8 @@ import { readFileSync, writeFileSync, rmSync, mkdirSync } from "node:fs";
 import { chargerCommunes, corpsCommune, grapheCommune } from "./communes.mjs";
 import { chargerAnnonces, listeHTML, filtresHTML, corpsBien, grapheBien, esc as escHtml } from "./annonces.mjs";
 import { join, dirname } from "node:path";
+import { readdirSync, existsSync } from "node:fs";
+import { lireArticle } from "../blog/build.mjs";
 import { fileURLToPath } from "node:url";
 
 const ici = dirname(fileURLToPath(import.meta.url));
@@ -26,11 +28,13 @@ export const PAGES = [
   { fichier: "apporteur-affaires.html", nom: "Apporteur d'affaires", titre: "Apporteur d'affaires immobilier Côte Normande | N. Malfilatre",
     description: "Recommandez un proche qui souhaite vendre son bien à Nadine Malfilatre : si la vente se conclut, vous êtes rémunéré à la signature chez le notaire." },
   { fichier: "faq.html", nom: "Questions fréquentes", titre: "Questions fréquentes immobilier | Nadine Malfilatre", faq: true,
-    description: "Estimation gratuite, honoraires, secteur couvert, apporteur d'affaires : les réponses de Nadine Malfilatre, conseillère immobilière sur la Côte Normande." },
+    description: "Délais de vente, frais de notaire, diagnostics obligatoires, mandats, plus-value, estimation : les réponses de Nadine Malfilatre, conseillère immobilière à Honfleur." },
   { fichier: "mentions-legales.html", nom: "Mentions légales", titre: "Mentions légales | Nadine Malfilatre, immobilier à Honfleur",
     description: "Mentions légales du site de Nadine Malfilatre, conseillère immobilière Propriétés Privées : éditeur, hébergeur, carte professionnelle, garantie financière et médiateur." },
   { fichier: "confidentialite.html", nom: "Confidentialité", titre: "Politique de confidentialité | Nadine Malfilatre",
     description: "Comment Nadine Malfilatre utilise les informations envoyées par les formulaires du site, combien de temps elles sont gardées et comment exercer vos droits." },
+  { fichier: "plan-du-site.html", nom: "Plan du site", titre: "Plan du site | Nadine Malfilatre, immobilier à Honfleur", plan: true,
+    description: "Toutes les pages du site de Nadine Malfilatre : biens à vendre, prix de l'immobilier par commune, estimation, conseils et informations légales." },
   { fichier: "contact.html", nom: "Contact", titre: "Contact : Nadine Malfilatre, immobilier Côte Normande",
     description: "Contactez Nadine Malfilatre, conseillère immobilière Propriétés Privées sur la Côte Normande : 06 81 51 62 89, ou par le formulaire en ligne." },
 ];
@@ -69,9 +73,8 @@ ${image ? "" : `<meta property="og:image:width" content="1200">
 <script type="application/ld+json">
 ${JSON.stringify({ "@context": "https://schema.org", "@graph": graphe }, null, 1)}
 </script>
-${heroPreload}<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;700;800&family=Playfair+Display:wght@500;600;700&display=swap">
+${heroPreload}<link rel="preload" href="fonts/figtree.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/playfair-display.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="css/site.css">
 </head>
 <body>
@@ -102,10 +105,28 @@ ${av.avis.map((x) => `    <figure class="avis-carte">${etoiles(x.note)}<blockquo
 </div></section>`;
 }
 
+// Page « Plan du site » lisible par les visiteurs (le sitemap.xml reste pour les moteurs)
+function planHTML(biens, communes) {
+  const dossier = join(ici, "..", "articles");
+  const articles = (existsSync(dossier) ? readdirSync(dossier).filter((f) => f.endsWith(".md")) : [])
+    .map((f) => lireArticle(f, readFileSync(join(dossier, f), "utf8"))).filter((a) => !a.brouillon).sort((a, b) => b.date.localeCompare(a.date));
+  const lien = (href, txt) => `<li><a href="${escHtml(href)}">${escHtml(txt)}</a></li>`;
+  const bloc = (titre, items) => items.length ? `<div class="plan-bloc"><h2>${titre}</h2><ul>${items.join("")}</ul></div>` : "";
+  const nom = (f) => PAGES.find((p) => p.fichier === f)?.nom || "Accueil";
+  return `<div class="plan">
+${bloc("Le site", ["index.html", "biens.html", "estimation.html", "qui-suis-je.html", "apporteur-affaires.html", "faq.html", "contact.html"].map((f) => lien(f, nom(f))))}
+${bloc("Biens à vendre", biens.map((a) => lien(a.chemin, a.titreSeo)))}
+${bloc("Immobilier par commune", communes.map((c) => lien(c.fichier, `Immobilier à ${c.nom}`)))}
+${bloc("Actualités et conseils", [lien("blog/index.html", "Toutes les actualités"), ...articles.map((a) => lien(`blog/${a.slug}.html`, a.titre))])}
+${bloc("Informations légales", [lien("mentions-legales.html", "Mentions légales"), lien("confidentialite.html", "Confidentialité")])}
+</div>`;
+}
+
 export function construirePages() {
   const entete = lire("_entete.html"), pied = lire("_pied.html");
   const agent = JSON.parse(lire("_agent.json")), faq = JSON.parse(lire("_faq.json")), avis = JSON.parse(lire("_avis.json"));
   const annonces = chargerAnnonces();
+  const communes = chargerCommunes();
   for (const p of PAGES) {
     const url = SITE_URL + (p.fichier === "index.html" ? "" : p.fichier);
     const graphe = [agent];
@@ -114,13 +135,13 @@ export function construirePages() {
     // Annonces écrites dans la page (plus de chargement par JavaScript)
     let corps = lire(p.fichier).replace(/\{\{annonces(?::(\d+))?\}\}/g, (m, lim) => listeHTML(annonces, +lim || 0).cartes)
       .replace("{{maj}}", listeHTML(annonces).maj).replace("{{filtres}}", annonces.annonces.length > 1 ? filtresHTML(annonces) : "").replace("{{nb}}", String(annonces.annonces.length)).replace("{{avis}}", avisHTML(avis));
+    if (p.plan) corps = corps.replace("{{plan}}", planHTML(annonces.annonces, communes));
     if (p.fichier === "biens.html" && annonces.annonces.length) {
       graphe.push({ "@type": "ItemList", name: "Biens à vendre", itemListElement: annonces.annonces.map((a, i) => ({ "@type": "ListItem", position: i + 1, url: SITE_URL + a.chemin, name: a.titreSeo })) });
     }
     writeFileSync(join(site, p.fichier), documentHTML({ titre: p.titre, description: p.description, url, graphe, corps, actif: p.fichier, entete, pied }));
   }
   // Une page par commune du secteur (prix DVF, biens, questions locales)
-  const communes = chargerCommunes();
   for (const c of communes) {
     const url = SITE_URL + c.fichier;
     const prix = [c.M && `maisons ${new Intl.NumberFormat("fr-FR").format(c.M.m)} €/m²`, c.A && `appartements ${new Intl.NumberFormat("fr-FR").format(c.A.m)} €/m²`].filter(Boolean).join(", ");

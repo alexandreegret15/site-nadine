@@ -3,6 +3,7 @@ title: Bienvenue sur mon nouveau site
 date: 2026-11-18
 categorie: Actualité
 image: /img/nadine.png
+alt: Nadine Malfilatre, conseillère immobilière sur la Côte Normande
 resume: Mes biens à vendre, mes conseils et l'actualité de l'immobilier sur la Côte Normande, réunis au même endroit.
 brouillon: false
 ---

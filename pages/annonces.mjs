@@ -77,7 +77,7 @@ export function nettoyer(a) {
   const texteBrut = String(a.description || "").replace(/[\s\u00a0\u202f]/g, "");
   const terrain = a.terrain && !/^(appartement|studio|plateau|loft)/i.test(String(a.titre)) && texteBrut.includes(`${a.terrain}m²`) ? a.terrain : null;
   const typeMot = String(a.titre || "").trim().split(/\s+/)[0] || "Bien";
-  const type = /^(maison|appartement|terrain|immeuble|plateau|studio|loft|propri[ée]t[ée])$/i.test(typeMot) ? typeMot : "Bien";
+  const type = /^(maison|appartement|terrain|immeuble|plateau|studio|loft|duplex|triplex|villa|long[èe]re|chaumi[èe]re|manoir|pavillon|propri[ée]t[ée])$/i.test(typeMot) ? typeMot : "Bien";
   let ville = a.ville ? nomOfficiel(a.ville, a.cp) : "";
   if (!ville) ville = String(a.titre || "").match(/^\S+\s+(.+?)\s+\d+\s+pi[eè]ce/i)?.[1] || "";
   const titre = String(a.titre || "Bien").replace(/pièce\(s\)/i, a.pieces > 1 ? "pièces" : "pièce");
@@ -106,7 +106,7 @@ export function carte(a) {
   const specs = [a.surface && `${fmt.format(a.surface)} m²`, a.pieces && `${a.pieces} pièce${a.pieces > 1 ? "s" : ""}`, a.chambres && `${a.chambres} ch.`,
     a.terrain && `Terrain ${fmt.format(a.terrain)} m²`, `Réf. ${a.ref}`].filter(Boolean).map((s) => `<span>${esc(s)}</span>`).join("");
   const prix = a.prix ? `${fmt.format(a.prix)} €${a.surface ? `<small>${fmt.format(Math.round(a.prix / a.surface))} €/m²</small>` : ""}` : "Prix sur demande";
-  const cat = /^maison|propri/i.test(a.type) ? "maison" : /^appartement|studio|loft/i.test(a.type) ? "appartement" : "autre";
+  const cat = /^(maison|propri|villa|long|chaumi|manoir|pavillon)/i.test(a.type) ? "maison" : /^(appartement|studio|loft|duplex|triplex)/i.test(a.type) ? "appartement" : "autre";
   return `<article class="bien" data-type="${cat}" data-ville="${esc(a.ville)}" data-pieces="${a.pieces || 0}" data-prix="${a.prix || 0}" data-surface="${a.surface || 0}">
   <div class="photo">${photo}${a.exclusivite ? `<span class="tag">Exclusivité</span>` : ""}</div>
   <div class="info">
@@ -189,7 +189,7 @@ export function corpsBien(a) {
 
 // Données structurées d'un bien (correspondent au texte visible de la page)
 export function grapheBien(a, url, idAgent) {
-  const logement = /appartement|studio|loft/i.test(a.type) ? "Apartment" : /maison|propri/i.test(a.type) ? "SingleFamilyResidence" : "Accommodation";
+  const logement = /appartement|studio|loft|duplex|triplex/i.test(a.type) ? "Apartment" : /maison|propri|villa|long|chaumi|manoir|pavillon/i.test(a.type) ? "SingleFamilyResidence" : "Accommodation";
   const abs = (p) => (/^https?:/.test(p) ? p : new URL(p, url.replace(/biens\/[^/]+$/, "")).href);
   return {
     "@type": "RealEstateListing",

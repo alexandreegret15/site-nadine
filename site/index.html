@@ -99,9 +99,8 @@
 }
 </script>
 <link rel="preload" as="image" href="img/port-honfleur.jpg" imagesrcset="img/port-honfleur-1024.webp 1024w, img/port-honfleur-1920.webp 1920w" imagesizes="100vw" fetchpriority="high">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;700;800&family=Playfair+Display:wght@500;600;700&display=swap">
+<link rel="preload" href="fonts/figtree.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/playfair-display.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="css/site.css">
 </head>
 <body>
@@ -144,7 +143,7 @@
 </section>
 <section class="chiffres" aria-label="Nadine Malfilatre en quelques chiffres"><div class="wrap">
   <div class="chiffre"><strong>25 ans</strong><span>d'expérience dans l'immobilier</span></div>
-  <div class="chiffre"><strong id="nb-biens">6</strong><span>biens à vendre en ce moment</span></div>
+  <div class="chiffre"><strong id="nb-biens">7</strong><span>biens à vendre en ce moment</span></div>
   <div class="chiffre"><strong>0 €</strong><span>pour l'estimation de votre bien</span></div>
   <div class="chiffre"><strong>1</strong><span>seule interlocutrice, du 1<sup>er</sup> rendez-vous à l'acte</span></div>
 </div></section>
@@ -152,16 +151,26 @@
   <div class="head">
     <span class="eyebrow">À vendre</span>
     <h2>Mes derniers biens à vendre</h2>
-    <p id="maj">6 biens en vente · liste mise à jour le 27 novembre 2026.</p>
+    <p id="maj">7 biens en vente · liste mise à jour le 28 novembre 2026.</p>
   </div>
   <div class="biens" id="liste">
+<article class="bien" data-type="appartement" data-ville="Honfleur" data-pieces="3" data-prix="295000" data-surface="73">
+  <div class="photo"><picture><source srcset="photos/472833NMAL/vignette.webp" type="image/webp"><img src="photos/472833NMAL/1.jpg" alt="Duplex 3 pièces de 73 m² à Honfleur" loading="lazy" decoding="async" width="800" height="533"></picture><span class="nb">14 photos</span></div>
+  <div class="info">
+    <h3>Duplex 3 pièces de 73 m² à Honfleur</h3>
+    <span class="lieu">Honfleur (14600)</span>
+    <div class="specs"><span>73 m²</span><span>3 pièces</span><span>2 ch.</span><span>Réf. 472833NMAL</span></div>
+    <p class="desc">A Honfleur, au sein d'un immeuble ancien bien entretenu datant de 1900, ce duplex de 73,9 m2 Carrez (82,53 m2 au sol) se situe au 3e étage d'une copropriété de quatre niveaux. Il développe 4 pièces dont 2 chambres, dans une ambiance chaleureuse portée par un parquet posé sur toute la pièce de vie et une double exposition est/ouest.</p>
+    <div class="bottom"><span class="prix">295 000 €<small>4 041 €/m²</small></span><span class="dpe E">DPE E</span><a class="voir" href="biens/duplex-honfleur-472833nmal.html">Voir le bien →</a></div>
+  </div>
+</article>
 <article class="bien" data-type="appartement" data-ville="Le Havre" data-pieces="4" data-prix="163000" data-surface="90">
   <div class="photo"><picture><source srcset="photos/468698NMAL/vignette.webp" type="image/webp"><img src="photos/468698NMAL/1.jpg" alt="Appartement 4 pièces de 90 m² au Havre" loading="lazy" decoding="async" width="800" height="533"></picture><span class="nb">8 photos</span></div>
   <div class="info">
     <h3>Appartement 4 pièces de 90 m² au Havre</h3>
     <span class="lieu">Le Havre (76600)</span>
     <div class="specs"><span>90 m²</span><span>4 pièces</span><span>3 ch.</span><span>Réf. 468698NMAL</span></div>
-    <p class="desc">Proche centre du Havre, ce duplex de 90 m² offre des volumes confortables et une disposition agréable sur deux niveaux. A proximité des écoles, des commerces et des transports en commun, il bénéficie d'un emplacement pratique pour faciliter le quotidien. Situé au 1er étage d'un immeuble bien entretenu, l'appartement profite d'une exposition est-ouest. Le premier niveau comprend une cuisine ouverte</p>
+    <p class="desc">Proche centre du Havre, ce duplex de 90 m² offre des volumes confortables et une disposition agréable sur deux niveaux. A proximité des écoles, des commerces et des transports en commun, il bénéficie d'un emplacement pratique pour faciliter le quotidien.</p>
     <div class="bottom"><span class="prix">163 000 €<small>1 811 €/m²</small></span><span class="dpe D">DPE D</span><a class="voir" href="biens/appartement-le-havre-468698nmal.html">Voir le bien →</a></div>
   </div>
 </article>
@@ -171,18 +180,8 @@
     <h3>Appartement 3 pièces de 55 m² à La Rivière-Saint-Sauveur</h3>
     <span class="lieu">La Rivière-Saint-Sauveur (14600)</span>
     <div class="specs"><span>55 m²</span><span>3 pièces</span><span>2 ch.</span><span>Réf. 471481NMAL</span></div>
-    <p class="desc">Situé à La Rivière-Saint-Sauveur, à quelques minutes d'Honfleur, découvrez cet appartement de 55 m² situé au 2? étage d'une résidence sécurisée. Il comprend une entrée, un séjour avec cuisine ouverte donnant accès à un grand balcon, deux chambres avec placards, une salle de bains, des WC séparés ainsi qu'un débarras pouvant être aménagé en bureau ou cellier. Deux places de stationnement privatives</p>
+    <p class="desc">Situé à La Rivière-Saint-Sauveur, à quelques minutes d'Honfleur, découvrez cet appartement de 55 m² situé au 2? étage d'une résidence sécurisée.</p>
     <div class="bottom"><span class="prix">153 000 €<small>2 782 €/m²</small></span><span class="dpe C">DPE C</span><a class="voir" href="biens/appartement-la-riviere-saint-sauveur-471481nmal.html">Voir le bien →</a></div>
-  </div>
-</article>
-<article class="bien" data-type="maison" data-ville="Saint-Pierre-du-Val" data-pieces="5" data-prix="262000" data-surface="115">
-  <div class="photo"><picture><source srcset="photos/471460NMAL/vignette.webp" type="image/webp"><img src="photos/471460NMAL/1.jpg" alt="Maison 5 pièces de 115 m² à Saint-Pierre-du-Val" loading="lazy" decoding="async" width="800" height="533"></picture><span class="nb">9 photos</span></div>
-  <div class="info">
-    <h3>Maison 5 pièces de 115 m² à Saint-Pierre-du-Val</h3>
-    <span class="lieu">Saint-Pierre-du-Val (27210)</span>
-    <div class="specs"><span>115 m²</span><span>5 pièces</span><span>4 ch.</span><span>Terrain 1 600 m²</span><span>Réf. 471460NMAL</span></div>
-    <p class="desc">A seulement 15 minutes de Honfleur, 10 minutes du pont de Normandie au calme d'un environnement verdoyant, cette maison à combles offre un cadre de vie agréable et fonctionnel, idéal pour une famille en quête d'espace et de tranquillité. Dès l'entrée, on découvre un intérieur lumineux et bien agencé. Le rez-de-chaussée s'ouvre sur une cuisine conviviale, ouverte sur un séjour-salon spacieux, parfa</p>
-    <div class="bottom"><span class="prix">262 000 €<small>2 278 €/m²</small></span><span class="dpe E">DPE E</span><a class="voir" href="biens/maison-saint-pierre-du-val-471460nmal.html">Voir le bien →</a></div>
   </div>
 </article>
   </div>
@@ -245,7 +244,7 @@
   <div class="cols">
     <div><b>À propos</b><a href="qui-suis-je.html">Qui suis-je ?</a><a href="immobilier-honfleur.html">Immobilier à Honfleur</a><a href="immobilier-beuzeville.html">Immobilier à Beuzeville</a><a href="immobilier-pont-l-eveque.html">Immobilier à Pont-l'Évêque</a><a href="faq.html">Questions fréquentes</a><a href="blog/index.html">Actualités</a></div>
     <div><b>Vos projets</b><a href="biens.html">Acheter</a><a href="qui-suis-je.html#services">Vendre</a><a href="estimation.html">Estimer mon bien</a><a href="apporteur-affaires.html">Apporteur d'affaires</a></div>
-    <div><b>Liens pratiques</b><a href="https://www.proprietes-privees.com/bareme/NMAL.pdf" target="_blank" rel="noopener">Barème des honoraires (PDF)</a><a href="https://www.proprietes-privees.com/negociateur/nadine.malfilatre" target="_blank" rel="noopener">Ma page Propriétés Privées</a><a href="mentions-legales.html">Mentions légales</a><a href="confidentialite.html">Confidentialité</a><a href="sitemap.xml">Plan du site</a></div>
+    <div><b>Liens pratiques</b><a href="https://www.proprietes-privees.com/bareme/NMAL.pdf" target="_blank" rel="noopener">Barème des honoraires (PDF)</a><a href="https://www.proprietes-privees.com/negociateur/nadine.malfilatre" target="_blank" rel="noopener">Ma page Propriétés Privées</a><a href="mentions-legales.html">Mentions légales</a><a href="confidentialite.html">Confidentialité</a><a href="plan-du-site.html">Plan du site</a></div>
     <div><b>Contact</b><a href="tel:+33681516289">06 81 51 62 89</a><a href="mailto:n.malfilatre@proprietes-privees.com">n.malfilatre@proprietes-privees.com</a><span>Côte Normande</span></div>
   </div>
   <div class="legal">
